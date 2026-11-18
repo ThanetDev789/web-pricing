@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>เลือกแพ็กเกจเว็บไซต์</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: configurator — step 1 price ladder, step 2 add-ons, step 3 hosting; sticky summary on the right (bottom bar on phones) */
+:root {
+  --bg: #f6f7f4;
+  --surface: #ffffff;
+  --ink: #14201a;
+  --ink-2: #44514a;
+  --mute: #6f7a73;
+  --line: #dde2db;
+  --brand: #0f4c30;
+  --brand-2: #1b7047;
+  --brand-soft: #e7f0ea;
+  --on-brand: #ffffff;
+  --gold: #9a6f12;
+  --gold-soft: #fbf3df;
+  --warn: #9b3b1e;
+  --warn-soft: #fbe9e3;
+  --font-th: 'IBM Plex Sans Thai', 'Leelawadee UI', 'Noto Sans Thai', sans-serif;
+  --font-num: 'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1512; --surface: #18221c; --ink: #e9efea; --ink-2: #c2ccc5; --mute: #8f9b94; --line: #2a362f;
+    --brand: #7fd0a2; --brand-2: #9ee0b8; --brand-soft: #1d2d24; --on-brand: #0c1a12; --gold: #e2b65a; --gold-soft: #2b2416;
+    --warn: #f0a185; --warn-soft: #2e1c16;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-th); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 32px max(16px, env(safe-area-inset-right, 0px)) 80px max(16px, env(safe-area-inset-left, 0px)); }
+.num { font-family: var(--font-num); font-variant-numeric: tabular-nums; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--brand-2); outline-offset: 2px; border-radius: 4px; }
+
+/* Header */
+header.top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin-bottom: 28px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--brand-2); }
+header.top h1 { font-size: clamp(26px, 4vw, 40px); line-height: 1.2; margin-top: 6px; }
+header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
+.from { text-align: right; }
+.from .k { font-size: 13px; color: var(--mute); }
+.from .v { font-size: clamp(34px, 5vw, 52px); font-weight: 700; color: var(--brand); line-height: 1; }
+.from .v small { font-size: 16px; color: var(--ink-2); }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 24px; align-items: start; }
+.step { margin-bottom: 30px; }
+.step-h { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.step-h .n { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--brand); color: var(--on-brand); font-size: 13px; font-weight: 700; flex: none; }
+.step-h h2 { font-size: 20px; }
+.step-h span.hint { color: var(--mute); font-size: 13px; }
+
+/* Step 1 — levels */
+.levels { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.lvl { text-align: left; cursor: pointer; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; display: flex; flex-direction: column; gap: 4px; min-width: 0; transition: border-color .15s, transform .15s; }
+.lvl:hover { border-color: var(--brand-2); transform: translateY(-1px); }
+.lvl[aria-pressed="true"] { border-color: var(--brand); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.lvl .p { font-size: 22px; font-weight: 700; color: var(--brand); line-height: 1.15; }
+.lvl .p small { font-size: 12px; color: var(--mute); font-weight: 500; }
+.lvl .name { font-size: 12px; font-weight: 700; letter-spacing: .04em; color: var(--mute); }
+.lvl ul { margin: 2px 0 0; padding-left: 16px; font-size: 12.5px; color: var(--ink-2); }
+.lvl .w { font-size: 12px; color: var(--mute); margin-top: auto; padding-top: 4px; }
+
+/* Step 2 — add-ons */
+.group { margin-bottom: 16px; }
+.group h3 { font-size: 13px; font-weight: 700; letter-spacing: .05em; color: var(--mute); margin-bottom: 6px; }
+.items { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+.item { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; padding: 12px 14px; align-items: center; }
+.item + .item { border-top: 1px solid var(--line); }
+.item.on { background: color-mix(in oklab, var(--brand-soft) 70%, transparent); }
+.item.base { background: var(--brand-soft); }
+.thumb { width: 64px; height: 44px; border-radius: 6px; border: 1px solid var(--line); object-fit: cover; object-position: top; background: var(--bg); display: block; }
+.ph { width: 64px; height: 44px; border-radius: 6px; border: 1px dashed var(--line); display: grid; place-items: center; color: var(--mute); }
+.item .t { font-weight: 600; }
+.item .d { font-size: 13px; color: var(--ink-2); }
+.item .req { font-size: 12px; color: var(--mute); }
+.item .price { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+.item .price b { color: var(--brand); }
+.ctl { display: flex; align-items: center; gap: 8px; justify-self: end; }
+.toggle { position: relative; width: 46px; height: 26px; border-radius: 999px; background: var(--line); border: 0; cursor: pointer; flex: none; transition: background .15s; }
+.toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,.25); transition: transform .15s; }
+.toggle[aria-checked="true"] { background: var(--brand); }
+.toggle[aria-checked="true"]::after { transform: translateX(20px); }
+.stepper { display: inline-flex; align-items: center; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.stepper button { width: 32px; height: 32px; border: 0; background: transparent; cursor: pointer; font-size: 18px; line-height: 1; color: var(--brand); }
+.stepper button:disabled { color: var(--line); cursor: default; }
+.stepper input { width: 46px; height: 32px; border: 0; border-inline: 1px solid var(--line); text-align: center; font: 600 14px var(--font-num); background: transparent; color: var(--ink); -moz-appearance: textfield; }
+.stepper input::-webkit-inner-spin-button, .stepper input::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+.free { font-size: 12px; font-weight: 700; color: var(--brand-2); background: var(--brand-soft); padding: 3px 8px; border-radius: 6px; }
+
+/* Step 3 — hosting */
+.hosts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.host { text-align: left; cursor: pointer; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.host[aria-checked="true"] { border-color: var(--brand); background: var(--brand-soft); box-shadow: inset 0 0 0 1px var(--brand); }
+.host:disabled { opacity: .5; cursor: not-allowed; }
+.host .nm { font-weight: 700; }
+.host .p { font-size: 22px; font-weight: 700; color: var(--brand); line-height: 1.1; }
+.host .p small { font-size: 12px; color: var(--mute); font-weight: 500; }
+.host ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--ink-2); }
+.host .why { font-size: 12px; color: var(--warn); }
+.notice { margin-top: 10px; font-size: 13px; padding: 8px 12px; border-radius: 8px; background: var(--gold-soft); color: var(--gold); }
+
+/* Summary */
+.summary { position: sticky; top: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.sum-top { background: var(--brand); color: var(--on-brand); padding: 18px 20px; }
+.sum-top .k { font-size: 12px; font-weight: 600; letter-spacing: .06em; opacity: .85; }
+.sum-top .v { font-size: 34px; font-weight: 700; line-height: 1.15; }
+.sum-top .s { font-size: 13px; opacity: .9; }
+.sum-body { padding: 16px 20px; display: grid; gap: 12px; }
+.sum-body h3 { font-size: 13px; color: var(--mute); letter-spacing: .05em; }
+.lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 13px; }
+.lines li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; }
+.lines li span:first-child { color: var(--ink-2); }
+.lines.scroll { max-height: 260px; overflow-y: auto; padding-right: 4px; }
+.tot { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 14px; border-top: 1px solid var(--line); padding-top: 10px; }
+.tot dt { color: var(--ink-2); }
+.tot dd { margin: 0; text-align: right; font-weight: 600; }
+.tot .grand dt, .tot .grand dd { font-weight: 700; font-size: 16px; color: var(--ink); }
+.tot .grand { display: contents; }
+.actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.btn { cursor: pointer; border-radius: 8px; padding: 10px 12px; border: 1px solid var(--line); background: var(--surface); font-weight: 600; font-size: 14px; }
+.btn:hover { border-color: var(--brand-2); }
+.btn.primary { grid-column: 1 / -1; background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.toast { font-size: 13px; color: var(--brand-2); min-height: 1.3em; }
+.foot { margin-top: 24px; font-size: 12px; color: var(--mute); }
+
+/* Phone bottom bar */
+.bar { display: none; }
+@media (max-width: 980px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .summary { position: static; }
+  .hosts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; justify-content: space-between; align-items: center; gap: 12px;
+    padding: 10px max(16px, env(safe-area-inset-right, 0px)) calc(10px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+    background: var(--surface); border-top: 1px solid var(--line); box-shadow: 0 -10px 30px -20px rgba(0,0,0,.4); }
+  .bar .v { font-size: 20px; font-weight: 700; color: var(--brand); }
+  .bar .k { font-size: 12px; color: var(--mute); }
+  .bar .btn { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
+  .wrap { padding-bottom: 120px; }
+}
+@media (max-width: 560px) {
+  header.top { grid-template-columns: minmax(0, 1fr); }
+  .from { text-align: left; }
+  .hosts { grid-template-columns: minmax(0, 1fr); }
+  .item { grid-template-columns: minmax(0, 1fr) auto; }
+  .thumb, .ph { display: none; }
+}
+
+/* Print / PDF: the summary only */
+@media print {
+  body { background: #fff; color: #000; }
+  header.top .from, .layout > div:first-child, .bar, .actions, .toast { display: none !important; }
+  .layout { display: block; }
+  .summary { border: 0; position: static; }
+  .sum-top { background: #fff; color: #000; border-bottom: 2px solid #000; padding-inline: 0; }
+  .sum-body { padding-inline: 0; }
+  .lines.scroll { max-height: none; overflow: visible; }
+  #print-head { display: block !important; }
+}
+#print-head { display: none; margin-bottom: 12px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="eyebrow">เลือกแพ็กเกจเว็บไซต์</div>
+      <h1>เลือกเฉพาะสิ่งที่ต้องใช้ แล้วดูราคาจริงทันที</h1>
+      <p>เลือกขั้นราคาเป็นจุดเริ่ม เพิ่มหรือลด add-on ได้ทุกรายการ แล้วเลือก Hosting ราคาและสิ่งที่เลือกจะสรุปให้ด้านขวา คัดลอก บันทึก PDF หรือส่งลิงก์ให้คนอื่นเปิดดูชุดเดียวกันได้</p>
+    </div>
+    <div class="from">
+      <div class="k">เว็บไซต์เริ่มต้น</div>
+      <div class="v num">5,000 <small>บาท</small></div>
+      <div class="k">รวมภาษาไทย + อังกฤษ ฟรี</div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div>
+      <section class="step" aria-labelledby="s1">
+        <div class="step-h"><span class="n">1</span><h2 id="s1">เลือกขั้นราคาเริ่มต้น</h2><span class="hint">แต่ละขั้นได้ทุกอย่างของขั้นก่อนหน้า ปรับเพิ่มลดต่อในขั้นที่ 2 ได้</span></div>
+        <div class="levels" id="levels"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s2">
+        <div class="step-h"><span class="n">2</span><h2 id="s2">เลือก add-on</h2><span class="hint">รายการที่ต้องพึ่งรายการอื่นจะถูกเลือกให้อัตโนมัติ</span></div>
+        <div id="groups"></div>
+      </section>
+
+      <section class="step" aria-labelledby="s3">
+        <div class="step-h"><span class="n">3</span><h2 id="s3">Hosting + Domain + SSL</h2><span class="hint">ราคาต่อปี · ติดตั้งเว็บให้ฟรีเมื่อใช้ Hosting ของเรา</span></div>
+        <div class="hosts" id="hosts" role="radiogroup" aria-label="Hosting"></div>
+        <div class="notice" id="host-note" hidden></div>
+      </section>
+    </div>
+
+    <aside class="summary" id="summary" aria-live="polite">
+      <div class="sum-top">
+        <div id="print-head"><b>สรุปรายการเว็บไซต์ที่เลือก</b></div>
+        <div class="k">ค่าใช้จ่ายปีแรก</div>
+        <div class="v num" id="grand">5,000 บาท</div>
+        <div class="s" id="match">ตรงกับขั้น 5,000 บาท</div>
+      </div>
+      <div class="sum-body">
+        <h3>รายการที่เลือก</h3>
+        <ul class="lines scroll" id="lines"></ul>
+        <dl class="tot">
+          <dt>ค่าพัฒนาเว็บไซต์ (ครั้งเดียว)</dt><dd class="num" id="t-dev">5,000</dd>
+          <dt id="t-host-l">Hosting + Domain + SSL (ต่อปี)</dt><dd class="num" id="t-host">0</dd>
+          <dt id="t-care-l">ดูแลรายเดือน</dt><dd class="num" id="t-care">0</dd>
+          <div class="grand"><dt>รวมปีแรก</dt><dd class="num" id="t-grand">5,000</dd></div>
+          <dt>ปีถัดไป (ต่ออายุ Hosting)</dt><dd class="num" id="t-renew">0</dd>
+        </dl>
+        <dl class="tot">
+          <dt>ระยะเวลาทำงานโดยประมาณ</dt><dd id="weeks">1 สัปดาห์</dd>
+          <dt>งวด 1 · เริ่มงาน 40%</dt><dd class="num" id="p1">2,000</dd>
+          <dt>งวด 2 · อนุมัติดีไซน์ 30%</dt><dd class="num" id="p2">1,500</dd>
+          <dt>งวด 3 · ส่งมอบ 30%</dt><dd class="num" id="p3">1,500</dd>
+        </dl>
+        <div class="actions">
+          <button class="btn primary" type="button" id="copy">คัดลอกสรุป</button>
+          <button class="btn" type="button" id="share">คัดลอกลิงก์</button>
+          <button class="btn" type="button" id="print">บันทึก PDF</button>
+          <button class="btn" type="button" id="reset" style="grid-column: 1 / -1">เริ่มใหม่</button>
+        </div>
+        <div class="toast" id="toast" role="status"></div>
+      </div>
+    </aside>
+  </div>
+
+  <p class="foot">ราคาเป็นบาท · งวดชำระคิดจากค่าพัฒนาเว็บไซต์ · Hosting ต่ออายุรายปีในราคาเดิม · ระยะเวลานับเมื่อได้รับข้อมูลและรูปภาพครบ</p>
+</div>
+
+<div class="bar">
+  <div><div class="k">ค่าใช้จ่ายปีแรก</div><div class="v num" id="bar-total">5,000 บาท</div></div>
+  <button class="btn" type="button" id="to-summary">ดูสรุป</button>
+</div>
+
+<script>
+(() => {
+  /* ─────────── Price list ─────────── */
+  const BASE = { t: 'เว็บไซต์ 1 หน้า (Landing page)', d: 'ภาษาไทย + อังกฤษ (ฟรี) · รองรับมือถือ · ปุ่มโทร / LINE / แผนที่', price: 5000, days: 3, img: 'img/hero.webp' };
+
+  // max 1 = on/off switch, max > 1 = quantity. days = working days per unit.
+  const ITEMS = [
+    { id: 'page', g: 'หน้าเว็บและดีไซน์', t: 'เพิ่มหน้าเว็บ', d: 'เช่น เกี่ยวกับเรา · สินค้า/บริการ · ผลงาน · ทีมงาน · ติดต่อเรา', price: 1000, unit: 'หน้า', max: 30, days: 0.5, img: 'img/th-about.webp' },
+    { id: 'design', g: 'หน้าเว็บและดีไซน์', t: 'ออกแบบเฉพาะแบรนด์', d: 'โทนสีและตัวอักษรจากโลโก้ · ภาพเปิดเต็มจอ · ภาพเคลื่อนไหวเบา ๆ', price: 5000, max: 1, days: 4, img: 'img/hero.webp' },
+    { id: 'form', g: 'หน้าเว็บและดีไซน์', t: 'ฟอร์มติดต่อส่งเข้าอีเมล', d: 'ลูกค้ากรอกฟอร์ม ข้อความส่งเข้าอีเมลบริษัท', price: 1000, max: 1, days: 0.5, img: 'img/contact-form.webp' },
+    { id: 'dock', g: 'หน้าเว็บและดีไซน์', t: 'ปุ่มติดต่อลอย', d: 'LINE · WhatsApp · โทร · อีเมล ติดขอบจอทุกหน้า', price: 2000, max: 1, days: 1, img: 'img/mobile-th.webp' },
+
+    { id: 'lang', g: 'ภาษา', t: 'ภาษาเพิ่มเติม', d: 'นอกจากไทย + อังกฤษ เช่น จีน · ญี่ปุ่น · เกาหลี · สเปน · เยอรมัน', price: 2000, unit: 'ภาษา', max: 10, days: 1, img: 'img/lang-menu.webp' },
+
+    { id: 'cms', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ระบบหลังบ้าน (CMS)', d: 'แก้ข้อความ รูป และหน้าเว็บได้เองทุกภาษา · ผู้ดูแลหลายคน', price: 10000, max: 1, days: 6, img: 'img/admin-product.webp' },
+    { id: 'catalog', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'แคตตาล็อกสินค้า', d: 'หมวดหมู่ · หน้ารายละเอียดสินค้า · สเปก', price: 8000, max: 1, days: 4, req: ['cms'], img: 'img/products.webp' },
+    { id: 'quote', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ฟอร์มขอใบเสนอราคา', d: 'เก็บรายชื่อลูกค้าในหลังบ้าน · ติดตามสถานะ', price: 5000, max: 1, days: 2, req: ['cms'], img: 'img/contact-form.webp' },
+    { id: 'news', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ระบบบทความ / ข่าวสาร', d: 'เขียนบทความเองจากหลังบ้าน', price: 5000, max: 1, days: 2, req: ['cms'], img: 'img/articles.webp' },
+    { id: 'special', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ฟีเจอร์เฉพาะธุรกิจ', d: 'เช่น ปฏิทินฤดูกาลสินค้า ตารางราคา แผนที่สาขา', price: 6000, unit: 'รายการ', max: 5, days: 2, img: 'img/calendar.webp' },
+    { id: 'member', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ระบบสมาชิก / ล็อกอินลูกค้า', d: 'สมัครสมาชิก · เข้าสู่ระบบ · หน้าข้อมูลสมาชิก', price: 15000, max: 1, days: 6, req: ['cms'] },
+    { id: 'shop', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ร้านค้าออนไลน์ + ชำระเงิน', d: 'ตะกร้าสินค้า · ชำระเงินออนไลน์ · จัดการคำสั่งซื้อ', price: 25000, max: 1, days: 10, req: ['cms', 'catalog'] },
+
+    { id: 'ga', g: 'การตลาดและ SEO', t: 'ตั้งค่า Google Analytics + Search Console', d: 'ดูจำนวนผู้เข้าชม และส่งเว็บให้ Google เก็บข้อมูล', price: 1000, max: 1, days: 0.5 },
+    { id: 'seo', g: 'การตลาดและ SEO', t: 'SEO ระดับสากล', d: 'sitemap · ข้อมูลสำหรับ Google · รองรับหลายภาษา · redirect URL เดิม', price: 6000, max: 1, days: 2 },
+    { id: 'line', g: 'การตลาดและ SEO', t: 'แจ้งเตือนเข้า LINE', d: 'แจ้งเข้า LINE ทันทีเมื่อมีคนกรอกฟอร์ม', price: 3000, max: 1, days: 1, req: ['form'] },
+    { id: 'article', g: 'การตลาดและ SEO', t: 'เขียนบทความ SEO', d: 'บทความ 800–1,200 คำ พร้อมรูปประกอบ', price: 1500, unit: 'บทความ', max: 50, days: 0 },
+    { id: 'photo', g: 'การตลาดและ SEO', t: 'ตกแต่งรูปสินค้า', d: 'ตัดพื้นหลัง · ปรับแสงและสี', price: 100, unit: 'รูป', max: 500, step: 10, days: 0 },
+
+    { id: 'migrate', g: 'ติดตั้งและดูแล', t: 'ย้ายเนื้อหาจากเว็บเดิม', d: 'สินค้า บทความ และรูปภาพ', price: 4000, max: 1, days: 2, req: ['cms'] },
+    { id: 'deploy', g: 'ติดตั้งและดูแล', t: 'ติดตั้งบนเซิร์ฟเวอร์ของบริษัทลูกค้า', d: 'Linux หรือ Windows Server · HTTPS · คู่มือสำรองข้อมูล (ไม่ต้องเลือกถ้าใช้ Hosting ของเรา)', price: 6000, max: 1, days: 2 },
+    { id: 'training', g: 'ติดตั้งและดูแล', t: 'อบรมการใช้งานหลังบ้าน', d: 'อบรม 1 ครั้ง พร้อมคู่มือภาษาไทย', price: 3000, max: 1, days: 1, req: ['cms'], img: 'img/admin-dashboard.webp' },
+    { id: 'care', g: 'ติดตั้งและดูแล', t: 'ดูแลหลังส่งมอบ 3 เดือน', d: 'แก้ปัญหาการใช้งาน · ปรับแก้เล็กน้อย · อัปเดตความปลอดภัย', price: 10000, max: 1, days: 0 },
+    { id: 'monthly', g: 'ติดตั้งและดูแล', t: 'ดูแลรายเดือน', d: 'ต่อจากช่วงรับประกัน · แก้ไขเนื้อหาเล็กน้อย · สำรองข้อมูล', price: 3500, unit: 'เดือน', max: 12, days: 0, recurring: true },
+  ];
+  const byId = Object.fromEntries(ITEMS.map((i) => [i.id, i]));
+
+  // Each level includes everything in the previous one.
+  const LEVELS = [
+    { price: 5000, add: ['เว็บ 1 หน้า', 'ไทย + อังกฤษ ฟรี', 'รองรับมือถือ'], set: {} },
+    { price: 10000, add: ['เพิ่มเป็น 5 หน้า', 'ฟอร์มติดต่อส่งอีเมล'], set: { page: 4, form: 1 } },
+    { price: 15000, add: ['ออกแบบเฉพาะแบรนด์'], set: { design: 1 } },
+    { price: 20000, add: ['ภาษาที่ 3', 'ปุ่มติดต่อลอย', 'Google Analytics'], set: { lang: 1, dock: 1, ga: 1 } },
+    { price: 30000, add: ['ระบบหลังบ้าน แก้เนื้อหาเอง'], set: { cms: 1 } },
+    { price: 40000, add: ['แคตตาล็อกสินค้า', 'ภาษาที่ 4'], set: { catalog: 1, lang: 2 } },
+    { price: 50000, add: ['ฟอร์มขอใบเสนอราคา', 'ระบบบทความ'], set: { quote: 1, news: 1 } },
+    { price: 60000, add: ['SEO ระดับสากล', 'ย้ายเนื้อหาเว็บเดิม'], set: { seo: 1, migrate: 1 } },
+    { price: 75000, add: ['ครบ 7 ภาษา', 'ฟีเจอร์เฉพาะธุรกิจ', 'อบรมการใช้งาน'], set: { lang: 5, special: 1, training: 1 } },
+    { price: 100000, add: ['ติดตั้งเซิร์ฟเวอร์ + HTTPS', 'ดูแล 3 เดือน', 'แจ้งเตือน LINE', 'ฟีเจอร์เฉพาะธุรกิจที่ 2'], set: { deploy: 1, care: 1, line: 1, special: 2 } },
+  ];
+  // Expand to cumulative quantities
+  LEVELS.reduce((acc, l) => (l.qty = { ...acc, ...l.set }), {});
+
+  const HOSTS = [
+    { id: 'none', name: 'ไม่ต้องการ', price: 0, feats: ['ลูกค้ามีโดเมนและเซิร์ฟเวอร์เอง'] },
+    { id: 'basic', name: 'Basic', price: 3000, feats: ['โดเมน .com 1 ชื่อ', 'โฮสติ้งเว็บทั่วไป', 'SSL (https)', 'ติดตั้งให้ฟรี'], noCms: true },
+    { id: 'standard', name: 'Standard', price: 4000, feats: ['โดเมน .com 1 ชื่อ', 'เซิร์ฟเวอร์รองรับระบบหลังบ้าน + ฐานข้อมูล', 'SSL (https)', 'สำรองข้อมูลทุกสัปดาห์', 'ติดตั้งให้ฟรี'] },
+    { id: 'premium', name: 'Premium', price: 5000, feats: ['ทุกอย่างใน Standard', 'สำรองข้อมูลทุกวัน', 'แจ้งเตือนเมื่อเว็บล่ม', 'โดเมน .co.th หรือโดเมนที่ 2'] },
+  ];
+
+  /* ─────────── State ─────────── */
+  const qty = Object.fromEntries(ITEMS.map((i) => [i.id, 0]));
+  let host = 'none';
+  let hostAuto = '';
+
+  const fmt = (n) => Math.round(n).toLocaleString('th-TH');
+  const $ = (id) => document.getElementById(id);
+
+  function setQty(id, n) {
+    const it = byId[id];
+    n = Math.max(0, Math.min(it.max, Math.round(n || 0)));
+    qty[id] = n;
+    if (n > 0) (it.req || []).forEach((r) => qty[r] === 0 && setQty(r, 1));
+    if (n === 0) ITEMS.filter((d) => (d.req || []).includes(id) && qty[d.id] > 0).forEach((d) => setQty(d.id, 0));
+  }
+
+  /* ─────────── Render (static parts) ─────────── */
+  const weeksFor = (q) => Math.max(1, Math.ceil((BASE.days + ITEMS.reduce((s, i) => s + i.days * (q[i.id] || 0), 0)) / 5));
+  $('levels').innerHTML = LEVELS.map((l, idx) => `
+    <button class="lvl" type="button" data-level="${idx}" aria-pressed="false">
+      <span class="name">ขั้นที่ ${idx + 1}</span>
+      <span class="p num">${fmt(l.price)} <small>บาท</small></span>
+      <ul>${l.add.map((a) => `<li>${a}</li>`).join('')}</ul>
+      <span class="w">ประมาณ ${weeksFor(l.qty)} สัปดาห์</span>
+    </button>`).join('');
+
+  const groupNames = [...new Set(ITEMS.map((i) => i.g))];
+  const thumb = (src) => src ? `<img class="thumb" src="${src}" alt="" loading="lazy">` : '<span class="ph" aria-hidden="true">+</span>';
+  $('groups').innerHTML =
+    `<div class="group"><h3>รวมในราคาเริ่มต้น</h3><div class="items">
+      <div class="item base">${thumb(BASE.img)}
+        <div><div class="t">${BASE.t}</div><div class="d">${BASE.d}</div><div class="price"><b class="num">${fmt(BASE.price)}</b> บาท</div></div>
+        <span class="free">รวมแล้ว</span></div></div></div>` +
+    groupNames.map((g) => `<div class="group"><h3>${g}</h3><div class="items">${ITEMS.filter((i) => i.g === g).map((i) => `
+      <div class="item" id="row-${i.id}">
+        ${thumb(i.img)}
+        <div>
+          <div class="t">${i.t}</div>
+          <div class="d">${i.d}</div>
+          ${i.req ? `<div class="req">ต้องมี: ${i.req.map((r) => byId[r].t).join(', ')}</div>` : ''}
+          <div class="price"><b class="num">${fmt(i.price)}</b> บาท${i.unit ? ` / ${i.unit}` : ''}</div>
+        </div>
+        <div class="ctl">${i.max === 1
+          ? `<button class="toggle" type="button" role="switch" aria-checked="false" data-toggle="${i.id}" aria-label="${i.t}"></button>`
+          : `<div class="stepper"><button type="button" data-dec="${i.id}" aria-label="ลด ${i.t}">−</button><input id="q-${i.id}" data-qty="${i.id}" type="number" inputmode="numeric" min="0" max="${i.max}" step="${i.step || 1}" value="0" aria-label="จำนวน${i.unit || ''} ${i.t}"><button type="button" data-inc="${i.id}" aria-label="เพิ่ม ${i.t}">+</button></div>`}
+        </div>
+      </div>`).join('')}</div></div>`).join('');
+
+  $('hosts').innerHTML = HOSTS.map((h) => `
+    <button class="host" type="button" role="radio" aria-checked="false" data-host="${h.id}">
+      <span class="nm">${h.name}</span>
+      <span class="p num">${h.price ? fmt(h.price) : '0'} <small>${h.price ? 'บาท / ปี' : 'บาท'}</small></span>
+      <ul>${h.feats.map((f) => `<li>${f}</li>`).join('')}</ul>
+      ${h.noCms ? '<span class="why" hidden id="why-basic">ใช้ไม่ได้กับระบบหลังบ้าน</span>' : ''}
+    </button>`).join('');
+
+  /* ─────────── Update ─────────── */
+  function calc() {
+    const chosen = ITEMS.filter((i) => qty[i.id] > 0);
+    const dev = BASE.price + chosen.filter((i) => !i.recurring).reduce((s, i) => s + i.price * qty[i.id], 0);
+    const care = chosen.filter((i) => i.recurring).reduce((s, i) => s + i.price * qty[i.id], 0);
+    const h = HOSTS.find((x) => x.id === host);
+    const days = BASE.days + chosen.reduce((s, i) => s + i.days * qty[i.id], 0);
+    const level = [...LEVELS].reverse().find((l) => ITEMS.every((i) => (l.qty[i.id] || 0) === qty[i.id]));
+    const below = [...LEVELS].reverse().find((l) => ITEMS.every((i) => (l.qty[i.id] || 0) <= qty[i.id]));
+    return { chosen, dev, care, h, days, weeks: Math.max(1, Math.ceil(days / 5)), level, below, grand: dev + care + h.price };
+  }
+
+  function update() {
+    // Hosting rule: a CMS needs a server with a database
+    const basicBtn = document.querySelector('[data-host="basic"]');
+    basicBtn.disabled = qty.cms > 0;
+    $('why-basic').hidden = !(qty.cms > 0);
+    if (qty.cms > 0 && host === 'basic') { host = 'standard'; hostAuto = 'เปลี่ยน Hosting เป็น Standard ให้อัตโนมัติ เพราะระบบหลังบ้านต้องใช้เซิร์ฟเวอร์ที่รองรับฐานข้อมูล'; }
+    $('host-note').hidden = !hostAuto;
+    $('host-note').textContent = hostAuto;
+
+    const c = calc();
+    ITEMS.forEach((i) => {
+      $('row-' + i.id).classList.toggle('on', qty[i.id] > 0);
+      if (i.max === 1) document.querySelector(`[data-toggle="${i.id}"]`).setAttribute('aria-checked', String(qty[i.id] > 0));
+      else {
+        $('q-' + i.id).value = qty[i.id];
+        document.querySelector(`[data-dec="${i.id}"]`).disabled = qty[i.id] === 0;
+        document.querySelector(`[data-inc="${i.id}"]`).disabled = qty[i.id] >= i.max;
+      }
+    });
+    document.querySelectorAll('[data-level]').forEach((b) => b.setAttribute('aria-pressed', String(LEVELS[b.dataset.level] === c.level)));
+    document.querySelectorAll('[data-host]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.host === host)));
+
+    $('lines').innerHTML = [`<li><span>${BASE.t} · ไทย + อังกฤษ</span><span class="num">${fmt(BASE.price)}</span></li>`,
+      ...c.chosen.map((i) => `<li><span>${i.t}${i.max > 1 ? ` × ${qty[i.id]} ${i.unit}` : ''}</span><span class="num">${fmt(i.price * qty[i.id])}</span></li>`),
+      ...(c.h.price ? [`<li><span>Hosting ${c.h.name} (ต่อปี)</span><span class="num">${fmt(c.h.price)}</span></li>`] : []),
+    ].join('');
+    $('t-dev').textContent = fmt(c.dev);
+    $('t-host').textContent = fmt(c.h.price);
+    $('t-host-l').textContent = c.h.price ? `Hosting ${c.h.name} + Domain + SSL (ต่อปี)` : 'Hosting + Domain + SSL';
+    $('t-care').textContent = fmt(c.care);
+    $('t-care-l').textContent = qty.monthly ? `ดูแลรายเดือน ${qty.monthly} เดือน` : 'ดูแลรายเดือน';
+    $('t-care-l').hidden = $('t-care').hidden = !qty.monthly;
+    $('t-grand').textContent = fmt(c.grand);
+    $('t-renew').textContent = c.h.price ? `${fmt(c.h.price)} / ปี` : '—';
+    $('grand').textContent = `${fmt(c.grand)} บาท`;
+    $('bar-total').textContent = `${fmt(c.grand)} บาท`;
+    $('match').textContent = c.level ? `ตรงกับขั้น ${fmt(c.level.price)} บาท${c.h.price ? ' + Hosting' : ''}`
+      : c.below ? `ขั้น ${fmt(c.below.price)} บาท + add-on ที่เลือกเพิ่ม` : 'ปรับเอง';
+    $('weeks').textContent = `${c.weeks} สัปดาห์`;
+    const p1 = Math.round(c.dev * 0.4), p2 = Math.round(c.dev * 0.3);
+    $('p1').textContent = fmt(p1); $('p2').textContent = fmt(p2); $('p3').textContent = fmt(c.dev - p1 - p2);
+
+    // Shareable link: #page=4&cms=1&h=standard
+    const parts = ITEMS.filter((i) => qty[i.id] > 0).map((i) => `${i.id}=${qty[i.id]}`);
+    if (host !== 'none') parts.push(`h=${host}`);
+    try { history.replaceState(null, '', parts.length ? '#' + parts.join('&') : location.pathname + location.search); } catch {}
+  }
+
+  function applyLevel(idx) {
+    ITEMS.forEach((i) => (qty[i.id] = 0));
+    Object.entries(LEVELS[idx].qty).forEach(([id, n]) => (qty[id] = n));
+    hostAuto = '';
+    update();
+  }
+
+  /* ─────────── Events ─────────── */
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-level],[data-toggle],[data-inc],[data-dec],[data-host]');
+    if (!t) return;
+    if (t.dataset.level) return applyLevel(+t.dataset.level);
+    if (t.dataset.host) { host = t.dataset.host; hostAuto = ''; return update(); }
+    const id = t.dataset.toggle || t.dataset.inc || t.dataset.dec;
+    const it = byId[id];
+    if (t.dataset.toggle) setQty(id, qty[id] ? 0 : 1);
+    if (t.dataset.inc) setQty(id, qty[id] + (it.step || 1));
+    if (t.dataset.dec) setQty(id, qty[id] - (it.step || 1));
+    update();
+  });
+  document.addEventListener('change', (e) => {
+    const id = e.target.dataset?.qty;
+    if (!id) return;
+    setQty(id, parseInt(e.target.value, 10));
+    update();
+  });
+
+  function summaryText() {
+    const c = calc();
+    return [
+      'สรุปรายการเว็บไซต์ที่เลือก',
+      c.level ? `ขั้นราคา ${fmt(c.level.price)} บาท` : '',
+      '',
+      `- ${BASE.t} (ไทย + อังกฤษ): ${fmt(BASE.price)} บาท`,
+      ...c.chosen.map((i) => `- ${i.t}${i.max > 1 ? ` × ${qty[i.id]} ${i.unit}` : ''}: ${fmt(i.price * qty[i.id])} บาท`),
+      '',
+      `ค่าพัฒนาเว็บไซต์: ${fmt(c.dev)} บาท`,
+      c.h.price ? `Hosting ${c.h.name} + Domain + SSL: ${fmt(c.h.price)} บาท/ปี` : 'Hosting + Domain: ลูกค้าจัดการเอง',
+      c.care ? `ดูแลรายเดือน ${qty.monthly} เดือน: ${fmt(c.care)} บาท` : '',
+      `รวมปีแรก: ${fmt(c.grand)} บาท`,
+      `ระยะเวลาประมาณ ${c.weeks} สัปดาห์`,
+      '',
+      `ดูรายการเดียวกัน: ${location.href}`,
+    ].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
+  }
+  async function copy(text, okMsg) {
+    try { await navigator.clipboard.writeText(text); $('toast').textContent = okMsg; }
+    catch { $('toast').textContent = 'คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความแล้วกด Ctrl+C'; prompt?.('คัดลอกข้อความนี้', text); }
+  }
+  $('copy').addEventListener('click', () => copy(summaryText(), 'คัดลอกสรุปแล้ว วางใน LINE หรืออีเมลได้เลย'));
+  $('share').addEventListener('click', () => copy(location.href, 'คัดลอกลิงก์แล้ว คนที่เปิดลิงก์จะเห็นรายการเดียวกัน'));
+  $('print').addEventListener('click', () => window.print());
+  $('reset').addEventListener('click', () => { applyLevel(0); host = 'none'; update(); $('toast').textContent = ''; });
+  $('to-summary').addEventListener('click', () => $('summary').scrollIntoView({ behavior: 'smooth' }));
+
+  /* ─────────── Load state from link ─────────── */
+  const params = new URLSearchParams(location.hash.slice(1));
+  if ([...params.keys()].length) {
+    params.forEach((v, k) => {
+      if (k === 'h' && HOSTS.some((h) => h.id === v)) host = v;
+      else if (byId[k]) setQty(k, parseInt(v, 10));
+    });
+    update();
+  } else {
+    applyLevel(0);
+  }
+})();
+</script>
+</body>
+</html>
