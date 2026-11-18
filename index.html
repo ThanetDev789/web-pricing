@@ -46,6 +46,10 @@ h1, h2, h3 { margin: 0; text-wrap: balance; }
 button { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--brand-2); outline-offset: 2px; border-radius: 4px; }
 
+.langbar { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 14px; background: var(--surface); }
+.langbar button { border: 0; background: transparent; padding: 6px 14px; font-weight: 600; font-size: 13px; cursor: pointer; color: var(--ink-2); }
+.langbar button[aria-pressed="true"] { background: var(--brand); color: var(--on-brand); }
+@media print { .langbar { display: none !important; } }
 /* Header */
 header.top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin-bottom: 28px; }
 .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--brand-2); }
@@ -180,33 +184,36 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
 <div class="wrap">
   <header class="top">
     <div>
-      <div class="eyebrow">เลือกแพ็กเกจเว็บไซต์</div>
-      <h1>เลือกเฉพาะสิ่งที่ต้องใช้ แล้วดูราคาจริงทันที</h1>
-      <p>เลือกขั้นราคาเป็นจุดเริ่ม เพิ่มหรือลด add-on ได้ทุกรายการ แล้วเลือก Hosting ราคาและสิ่งที่เลือกจะสรุปให้ด้านขวา กด “ดูตัวอย่างเว็บไซต์” เพื่อลองใช้เว็บจริงตามที่เลือก คัดลอก บันทึก PDF หรือส่งลิงก์ให้คนอื่นเปิดดูชุดเดียวกันได้</p>
-      <p class="must"><b>เว็บไซต์ต้องมีโดเมนและโฮสติ้งจึงจะเปิดใช้งานได้</b> เลือกแพ็กเกจ Hosting + Domain + SSL ของเราในขั้นที่ 3 (เริ่ม 3,000 บาท/ปี) หรือใช้ของที่บริษัทมีอยู่แล้วก็ได้</p>
+      <div class="langbar" role="group" aria-label="Language / ภาษา">
+        <button type="button" data-lang="th" aria-pressed="true">ไทย</button><button type="button" data-lang="en" aria-pressed="false">English</button>
+      </div>
+      <div class="eyebrow" data-i="eyebrow"></div>
+      <h1 data-i="h1"></h1>
+      <p data-i="intro"></p>
+      <p class="must" data-i="must1" data-html></p>
     </div>
     <div class="from">
-      <div class="k">เว็บไซต์เริ่มต้น</div>
-      <div class="v num">5,000 <small>บาท</small></div>
-      <div class="k">รวมภาษาไทย + อังกฤษ ฟรี</div>
+      <div class="k" data-i="fromK"></div>
+      <div class="v num">5,000 <small data-i="baht"></small></div>
+      <div class="k" data-i="fromNote"></div>
     </div>
   </header>
 
   <div class="layout">
     <div>
       <section class="step" aria-labelledby="s1">
-        <div class="step-h"><span class="n">1</span><h2 id="s1">เลือกขั้นราคาเริ่มต้น</h2><span class="hint">แต่ละขั้นได้ทุกอย่างของขั้นก่อนหน้า ปรับเพิ่มลดต่อในขั้นที่ 2 ได้</span></div>
+        <div class="step-h"><span class="n">1</span><h2 id="s1" data-i="s1"></h2><span class="hint" data-i="s1h"></span></div>
         <div class="levels" id="levels"></div>
       </section>
 
       <section class="step" aria-labelledby="s2">
-        <div class="step-h"><span class="n">2</span><h2 id="s2">เลือก add-on</h2><span class="hint">รายการที่ต้องพึ่งรายการอื่นจะถูกเลือกให้อัตโนมัติ</span></div>
+        <div class="step-h"><span class="n">2</span><h2 id="s2" data-i="s2"></h2><span class="hint" data-i="s2h"></span></div>
         <div id="groups"></div>
       </section>
 
       <section class="step" aria-labelledby="s3">
-        <div class="step-h"><span class="n">3</span><h2 id="s3">Hosting + Domain + SSL</h2><span class="hint">ราคาต่อปี · ติดตั้งเว็บให้ฟรีเมื่อใช้ Hosting ของเรา</span></div>
-        <p class="must">ทุกเว็บไซต์ต้องมี <b>โดเมน</b> (ชื่อเว็บ เช่น yourcompany.com) และ <b>โฮสติ้ง</b> (เซิร์ฟเวอร์ที่เก็บเว็บ) ต่ออายุทุกปี ถ้ายังไม่มี เลือกแพ็กเกจด้านล่างได้เลย ราคารวมโดเมน โฮสติ้ง SSL และติดตั้งให้ฟรี</p>
+        <div class="step-h"><span class="n">3</span><h2 id="s3">Hosting + Domain + SSL</h2><span class="hint" data-i="s3h"></span></div>
+        <p class="must" data-i="must3" data-html></p>
         <div class="hosts" id="hosts" role="radiogroup" aria-label="Hosting"></div>
         <div class="notice" id="host-note" hidden></div>
       </section>
@@ -214,114 +221,195 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
 
     <aside class="summary" id="summary" aria-live="polite">
       <div class="sum-top">
-        <div id="print-head"><b>สรุปรายการเว็บไซต์ที่เลือก</b></div>
-        <div class="k">ค่าใช้จ่ายปีแรก</div>
-        <div class="v num" id="grand">8,000 บาท</div>
-        <div class="s" id="match">ตรงกับขั้น 5,000 บาท</div>
+        <div id="print-head"><b data-i="printHead"></b></div>
+        <div class="k" data-i="firstYear"></div>
+        <div class="v num" id="grand"></div>
+        <div class="s" id="match"></div>
       </div>
       <div class="sum-body">
-        <h3>รายการที่เลือก</h3>
+        <h3 data-i="selected"></h3>
         <ul class="lines scroll" id="lines"></ul>
         <dl class="tot">
-          <dt>ค่าพัฒนาเว็บไซต์ (ครั้งเดียว)</dt><dd class="num" id="t-dev">5,000</dd>
-          <dt id="t-host-l">Hosting + Domain + SSL (ต่อปี)</dt><dd class="num" id="t-host">0</dd>
-          <dt id="t-care-l">ดูแลรายเดือน</dt><dd class="num" id="t-care">0</dd>
-          <div class="grand"><dt>รวมปีแรก</dt><dd class="num" id="t-grand">5,000</dd></div>
-          <dt>ปีถัดไป (ต่ออายุ Hosting)</dt><dd class="num" id="t-renew">0</dd>
+          <dt data-i="dev"></dt><dd class="num" id="t-dev"></dd>
+          <dt id="t-host-l"></dt><dd class="num" id="t-host"></dd>
+          <dt id="t-care-l"></dt><dd class="num" id="t-care"></dd>
+          <div class="grand"><dt data-i="grandL"></dt><dd class="num" id="t-grand"></dd></div>
+          <dt data-i="renewL"></dt><dd class="num" id="t-renew"></dd>
         </dl>
         <dl class="tot">
-          <dt>ระยะเวลาทำงานโดยประมาณ</dt><dd id="weeks">1 สัปดาห์</dd>
-          <dt>งวด 1 · เริ่มงาน 40%</dt><dd class="num" id="p1">2,000</dd>
-          <dt>งวด 2 · อนุมัติดีไซน์ 30%</dt><dd class="num" id="p2">1,500</dd>
-          <dt>งวด 3 · ส่งมอบ 30%</dt><dd class="num" id="p3">1,500</dd>
+          <dt data-i="weeksL"></dt><dd id="weeks"></dd>
+          <dt id="p1L"></dt><dd class="num" id="p1"></dd>
+          <dt id="p2L"></dt><dd class="num" id="p2"></dd>
+          <dt id="p3L" hidden></dt><dd class="num" id="p3" hidden></dd>
         </dl>
-        <p class="must" id="own-host" hidden>ลูกค้าต้องมีโดเมนและโฮสติ้งของตัวเองก่อนเปิดใช้งานเว็บ</p>
+        <p class="must" id="own-host" data-i="ownHost" hidden></p>
         <div class="actions">
-          <button class="btn primary" type="button" id="preview">ดูตัวอย่างเว็บไซต์</button>
-          <button class="btn" type="button" id="copy" style="grid-column: 1 / -1">คัดลอกสรุป</button>
-          <button class="btn" type="button" id="share">คัดลอกลิงก์</button>
-          <button class="btn" type="button" id="print">บันทึก PDF</button>
-          <button class="btn" type="button" id="reset" style="grid-column: 1 / -1">เริ่มใหม่</button>
+          <button class="btn primary" type="button" id="preview" data-i="preview"></button>
+          <button class="btn" type="button" id="copy" style="grid-column: 1 / -1" data-i="copy"></button>
+          <button class="btn" type="button" id="share" data-i="share"></button>
+          <button class="btn" type="button" id="print" data-i="print"></button>
+          <button class="btn" type="button" id="reset" style="grid-column: 1 / -1" data-i="reset"></button>
         </div>
         <div class="toast" id="toast" role="status"></div>
       </div>
     </aside>
   </div>
 
-  <p class="foot">ราคาเป็นบาท · งวดชำระคิดจากค่าพัฒนาเว็บไซต์ · Hosting ต่ออายุรายปีในราคาเดิม · ระยะเวลานับเมื่อได้รับข้อมูลและรูปภาพครบ</p>
+  <p class="foot" data-i="foot"></p>
 </div>
 
 <div class="bar">
-  <div><div class="k">ค่าใช้จ่ายปีแรก</div><div class="v num" id="bar-total">8,000 บาท</div></div>
-  <div style="display:flex;gap:8px"><button class="btn" type="button" id="preview-m">ดูตัวอย่าง</button><button class="btn" type="button" id="to-summary" style="background:var(--surface);color:var(--ink);border-color:var(--line)">ดูสรุป</button></div>
+  <div><div class="k" data-i="firstYear"></div><div class="v num" id="bar-total"></div></div>
+  <div style="display:flex;gap:8px"><button class="btn" type="button" id="preview-m" data-i="previewM"></button><button class="btn" type="button" id="to-summary" data-i="toSummary" style="background:var(--surface);color:var(--ink);border-color:var(--line)"></button></div>
 </div>
 
 <script src="preview.js"></script>
 <script>
 (() => {
+  /* ─────────── Interface text ─────────── */
+  const UI = {
+    th: {
+      eyebrow: 'เลือกแพ็กเกจเว็บไซต์', h1: 'เลือกเฉพาะสิ่งที่ต้องใช้ แล้วดูราคาจริงทันที',
+      intro: 'เลือกขั้นราคาเป็นจุดเริ่ม เพิ่มหรือลด add-on ได้ทุกรายการ แล้วเลือก Hosting ราคาและสิ่งที่เลือกจะสรุปให้ด้านขวา กด “ดูตัวอย่างเว็บไซต์” เพื่อลองใช้เว็บจริงตามที่เลือก คัดลอก บันทึก PDF หรือส่งลิงก์ให้คนอื่นเปิดดูชุดเดียวกันได้',
+      must1: '<b>เว็บไซต์ต้องมีโดเมนและโฮสติ้งจึงจะเปิดใช้งานได้</b> เลือกแพ็กเกจ Hosting + Domain + SSL ของเราในขั้นที่ 3 (เริ่ม 3,000 บาท/ปี) หรือใช้ของที่บริษัทมีอยู่แล้วก็ได้',
+      fromK: 'เว็บไซต์เริ่มต้น', fromNote: 'รวมภาษาไทย + อังกฤษ ฟรี', baht: 'บาท',
+      s1: 'เลือกขั้นราคาเริ่มต้น', s1h: 'แต่ละขั้นได้ทุกอย่างของขั้นก่อนหน้า ปรับเพิ่มลดต่อในขั้นที่ 2 ได้',
+      s2: 'เลือก add-on', s2h: 'รายการที่ต้องพึ่งรายการอื่นจะถูกเลือกให้อัตโนมัติ',
+      s3h: 'ราคาต่อปี · ชำระพร้อมงวดแรก · ติดตั้งเว็บให้ฟรีเมื่อใช้ Hosting ของเรา',
+      must3: 'ทุกเว็บไซต์ต้องมี <b>โดเมน</b> (ชื่อเว็บ เช่น yourcompany.com) และ <b>โฮสติ้ง</b> (เซิร์ฟเวอร์ที่เก็บเว็บ) ต่ออายุทุกปี ถ้ายังไม่มี เลือกแพ็กเกจด้านล่างได้เลย ราคารวมโดเมน โฮสติ้ง SSL และติดตั้งให้ฟรี',
+      printHead: 'สรุปรายการเว็บไซต์ที่เลือก', firstYear: 'ค่าใช้จ่ายปีแรก', selected: 'รายการที่เลือก',
+      dev: 'ค่าพัฒนาเว็บไซต์ (ครั้งเดียว)', grandL: 'รวมปีแรก', renewL: 'ปีถัดไป (ต่ออายุ Hosting)', weeksL: 'ระยะเวลาทำงานโดยประมาณ',
+      p1L: (h) => `งวด 1 · ก่อนเริ่มงาน (50%${h ? ' + Hosting' : ''})`, p2L: 'งวด 2 · หลังจบงาน (50%)',
+      p3L: 'ดูแลรายเดือน · ชำระทุกเดือน', perMonth: (p) => `${p} / เดือน`,
+      sumP1: (p, h) => `งวด 1 ก่อนเริ่มงาน: ${p} บาท (50%${h ? ' + Hosting' : ''})`, sumP2: (p) => `งวด 2 หลังจบงาน: ${p} บาท (50%)`,
+      ownHost: 'ลูกค้าต้องมีโดเมนและโฮสติ้งของตัวเองก่อนเปิดใช้งานเว็บ',
+      preview: 'ดูตัวอย่างเว็บไซต์', copy: 'คัดลอกสรุป', share: 'คัดลอกลิงก์', print: 'บันทึก PDF', reset: 'เริ่มใหม่',
+      previewM: 'ดูตัวอย่าง', toSummary: 'ดูสรุป',
+      foot: 'ราคาเป็นบาท · ชำระ 2 งวด: ก่อนเริ่มงาน 50% พร้อมค่า Hosting package และหลังจบงาน 50% · Hosting ต่ออายุรายปีในราคาเดิม · ระยะเวลานับเมื่อได้รับข้อมูลและรูปภาพครบ',
+      level: (n) => `ขั้นที่ ${n}`, about: (n) => `ประมาณ ${n} สัปดาห์`, weeks: (n) => `${n} สัปดาห์`, perYear: 'บาท / ปี',
+      included: 'รวมในราคาเริ่มต้น', inc: 'รวมแล้ว', needs: 'ต้องมี: ', notCms: 'ใช้ไม่ได้กับระบบหลังบ้าน',
+      autoStd: 'เปลี่ยน Hosting เป็น Standard ให้อัตโนมัติ เพราะระบบหลังบ้านต้องใช้เซิร์ฟเวอร์ที่รองรับฐานข้อมูล',
+      baseLine: (t) => `${t} · ไทย + อังกฤษ`, hostLine: (n) => `Hosting ${n} (ต่อปี)`,
+      hostL: (n) => `Hosting ${n} + Domain + SSL (ต่อปี)`, hostOwn: 'Hosting + Domain (ลูกค้ามีเอง)',
+      careL: (n) => (n ? `ดูแลรายเดือน ${n} เดือน` : 'ดูแลรายเดือน'),
+      match: (p, h) => `ตรงกับขั้น ${p} บาท${h ? ' + Hosting' : ''}`, below: (p) => `ขั้น ${p} บาท + add-on ที่เลือกเพิ่ม`, custom: 'ปรับเอง',
+      renew: (p) => `${p} / ปี`,
+      copyOk: 'คัดลอกสรุปแล้ว วางใน LINE หรืออีเมลได้เลย', linkOk: 'คัดลอกลิงก์แล้ว คนที่เปิดลิงก์จะเห็นรายการเดียวกัน',
+      copyFail: 'คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความแล้วกด Ctrl+C', previewFail: 'โหลดตัวอย่างไม่สำเร็จ กรุณารีเฟรชหน้า',
+      sumTitle: 'สรุปรายการเว็บไซต์ที่เลือก', sumLevel: (p) => `ขั้นราคา ${p} บาท`, sumBase: '(ไทย + อังกฤษ)',
+      sumDev: (p) => `ค่าพัฒนาเว็บไซต์: ${p} บาท`, sumHost: (n, p) => `Hosting ${n} + Domain + SSL: ${p} บาท/ปี`,
+      sumOwn: 'Hosting + Domain: ลูกค้ามีเอง (ต้องมีก่อนเปิดใช้งานเว็บ)', sumCare: (n, p) => `ดูแลรายเดือน ${n} เดือน: ${p} บาท`,
+      sumGrand: (p) => `รวมปีแรก: ${p} บาท`, sumWeeks: (n) => `ระยะเวลาประมาณ ${n} สัปดาห์`, sumLink: 'ดูรายการเดียวกัน: ',
+      chipPages: (n) => `เว็บ ${n} หน้า`, chipLangs: (n) => `${n} ภาษา`, chipOwn: 'โดเมน/โฮสติ้งของลูกค้า',
+    },
+    en: {
+      eyebrow: 'Website package builder', h1: 'Pick only what you need and see the real price instantly',
+      intro: 'Start from a price level, add or remove any add-on, then choose hosting. Your selection and price are summarised on the right. Press “Preview website” to try a working sample of what you picked, then copy it, save it as a PDF or share a link with the same selection.',
+      must1: '<b>Every website needs a domain and hosting to go live.</b> Choose our Hosting + Domain + SSL package in step 3 (from 3,000 THB a year) or use the ones your company already has.',
+      fromK: 'Websites from', fromNote: 'Thai + English included free', baht: 'THB',
+      s1: 'Choose a starting level', s1h: 'Each level includes everything in the one before. Fine-tune it in step 2.',
+      s2: 'Choose add-ons', s2h: 'An item that depends on another one selects it automatically.',
+      s3h: 'Per year · paid with the first payment · free installation with our hosting',
+      must3: 'Every website needs a <b>domain</b> (its name, such as yourcompany.com) and <b>hosting</b> (the server that stores it), renewed every year. If you don’t have them yet, choose a package below. It includes the domain, hosting, SSL and free installation.',
+      printHead: 'Your website selection', firstYear: 'First-year cost', selected: 'Selected items',
+      dev: 'Website development (one-time)', grandL: 'First-year total', renewL: 'Following years (hosting renewal)', weeksL: 'Estimated timeline',
+      p1L: (h) => `Payment 1 · before work starts (50%${h ? ' + hosting' : ''})`, p2L: 'Payment 2 · after completion (50%)',
+      p3L: 'Monthly care · billed monthly', perMonth: (p) => `${p} / month`,
+      sumP1: (p, h) => `Payment 1, before work starts: ${p} THB (50%${h ? ' + hosting' : ''})`, sumP2: (p) => `Payment 2, after completion: ${p} THB (50%)`,
+      ownHost: 'You need your own domain and hosting before the website can go live.',
+      preview: 'Preview website', copy: 'Copy summary', share: 'Copy link', print: 'Save as PDF', reset: 'Start over',
+      previewM: 'Preview', toSummary: 'Summary',
+      foot: 'Prices in Thai baht · 2 payments: 50% plus the hosting package before work starts, and 50% after completion · hosting renews yearly at the same price · the timeline starts once all content and images are received',
+      level: (n) => `Level ${n}`, about: (n) => `About ${n} week${n > 1 ? 's' : ''}`, weeks: (n) => `${n} week${n > 1 ? 's' : ''}`, perYear: 'THB / year',
+      included: 'Included in the starting price', inc: 'Included', needs: 'Requires: ', notCms: 'Not available with a CMS',
+      autoStd: 'Hosting was switched to Standard automatically, because a CMS needs a server with a database.',
+      baseLine: (t) => `${t} · Thai + English`, hostLine: (n) => `Hosting ${n} (per year)`,
+      hostL: (n) => `Hosting ${n} + Domain + SSL (per year)`, hostOwn: 'Hosting + Domain (your own)',
+      careL: (n) => (n ? `Monthly care, ${n} month${n > 1 ? 's' : ''}` : 'Monthly care'),
+      match: (p, h) => `Matches the ${p} THB level${h ? ' + hosting' : ''}`, below: (p) => `${p} THB level + extra add-ons`, custom: 'Custom',
+      renew: (p) => `${p} / year`,
+      copyOk: 'Summary copied. Paste it into LINE or an email.', linkOk: 'Link copied. Anyone who opens it sees the same selection.',
+      copyFail: 'Could not copy automatically. Select the text and press Ctrl+C.', previewFail: 'The preview did not load. Please refresh the page.',
+      sumTitle: 'Your website selection', sumLevel: (p) => `Level: ${p} THB`, sumBase: '(Thai + English)',
+      sumDev: (p) => `Website development: ${p} THB`, sumHost: (n, p) => `Hosting ${n} + Domain + SSL: ${p} THB/year`,
+      sumOwn: 'Hosting + Domain: your own (needed before going live)', sumCare: (n, p) => `Monthly care, ${n} months: ${p} THB`,
+      sumGrand: (p) => `First-year total: ${p} THB`, sumWeeks: (n) => `Estimated timeline: ${n} week${n > 1 ? 's' : ''}`, sumLink: 'Same selection: ',
+      chipPages: (n) => `${n}-page website`, chipLangs: (n) => `${n} languages`, chipOwn: 'Own domain/hosting',
+    },
+  };
+
   /* ─────────── Price list ─────────── */
-  const BASE = { t: 'เว็บไซต์ 1 หน้า (Landing page)', d: 'ภาษาไทย + อังกฤษ (ฟรี) · รองรับมือถือ · ปุ่มโทร / LINE / แผนที่', price: 5000, days: 3, img: 'img/hero.webp' };
+  const BASE = { t: { th: 'เว็บไซต์ 1 หน้า (Landing page)', en: 'One-page website (landing page)' }, d: { th: 'ภาษาไทย + อังกฤษ (ฟรี) · รองรับมือถือ · ปุ่มโทร / LINE / แผนที่', en: 'Thai + English (free) · mobile-friendly · call / LINE / map buttons' }, price: 5000, days: 3, img: 'img/hero.webp' };
+
+  const G = {
+    web: { th: 'หน้าเว็บและดีไซน์', en: 'Pages and design' }, lang: { th: 'ภาษา', en: 'Languages' },
+    sys: { th: 'ระบบหลังบ้านและฟีเจอร์', en: 'CMS and features' }, mkt: { th: 'การตลาดและ SEO', en: 'Marketing and SEO' },
+    ops: { th: 'ติดตั้งและดูแล', en: 'Setup and care' },
+  };
+  const U = {
+    page: { th: 'หน้า', en: ['page', 'pages'] }, lang: { th: 'ภาษา', en: ['language', 'languages'] }, item: { th: 'รายการ', en: ['item', 'items'] },
+    article: { th: 'บทความ', en: ['article', 'articles'] }, photo: { th: 'รูป', en: ['photo', 'photos'] }, month: { th: 'เดือน', en: ['month', 'months'] },
+  };
 
   // max 1 = on/off switch, max > 1 = quantity. days = working days per unit.
   const ITEMS = [
-    { id: 'page', g: 'หน้าเว็บและดีไซน์', t: 'เพิ่มหน้าเว็บ', d: 'เช่น เกี่ยวกับเรา · สินค้า/บริการ · ผลงาน · ทีมงาน · ติดต่อเรา', price: 1000, unit: 'หน้า', max: 30, days: 0.5, img: 'img/th-about.webp' },
-    { id: 'design', g: 'หน้าเว็บและดีไซน์', t: 'ออกแบบเฉพาะแบรนด์', d: 'โทนสีและตัวอักษรจากโลโก้ · ภาพเปิดเต็มจอ · ภาพเคลื่อนไหวเบา ๆ', price: 5000, max: 1, days: 4, img: 'img/hero.webp' },
-    { id: 'form', g: 'หน้าเว็บและดีไซน์', t: 'ฟอร์มติดต่อส่งเข้าอีเมล', d: 'ลูกค้ากรอกฟอร์ม ข้อความส่งเข้าอีเมลบริษัท', price: 1000, max: 1, days: 0.5, img: 'img/contact-form.webp' },
-    { id: 'dock', g: 'หน้าเว็บและดีไซน์', t: 'ปุ่มติดต่อลอย', d: 'LINE · WhatsApp · โทร · อีเมล ติดขอบจอทุกหน้า', price: 2000, max: 1, days: 1, img: 'img/mobile-th.webp' },
-
-    { id: 'lang', g: 'ภาษา', t: 'ภาษาเพิ่มเติม', d: 'นอกจากไทย + อังกฤษ เช่น จีน · ญี่ปุ่น · เกาหลี · สเปน · เยอรมัน', price: 2000, unit: 'ภาษา', max: 10, days: 1, img: 'img/lang-menu.webp' },
-
-    { id: 'cms', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ระบบหลังบ้าน (CMS)', d: 'แก้ข้อความ รูป และหน้าเว็บได้เองทุกภาษา · ผู้ดูแลหลายคน', price: 10000, max: 1, days: 6, img: 'img/admin-product.webp' },
-    { id: 'catalog', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'แคตตาล็อกสินค้า', d: 'หมวดหมู่ · หน้ารายละเอียดสินค้า · สเปก', price: 8000, max: 1, days: 4, req: ['cms'], img: 'img/products.webp' },
-    { id: 'quote', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ฟอร์มขอใบเสนอราคา', d: 'เก็บรายชื่อลูกค้าในหลังบ้าน · ติดตามสถานะ', price: 5000, max: 1, days: 2, req: ['cms'], img: 'img/contact-form.webp' },
-    { id: 'news', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ระบบบทความ / ข่าวสาร', d: 'เขียนบทความเองจากหลังบ้าน', price: 5000, max: 1, days: 2, req: ['cms'], img: 'img/articles.webp' },
-    { id: 'special', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ฟีเจอร์เฉพาะธุรกิจ', d: 'เช่น ปฏิทินฤดูกาลสินค้า ตารางราคา แผนที่สาขา', price: 6000, unit: 'รายการ', max: 5, days: 2, img: 'img/calendar.webp' },
-    { id: 'member', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ระบบสมาชิก / ล็อกอินลูกค้า', d: 'สมัครสมาชิก · เข้าสู่ระบบ · หน้าข้อมูลสมาชิก', price: 15000, max: 1, days: 6, req: ['cms'] },
-    { id: 'shop', g: 'ระบบหลังบ้านและฟีเจอร์', t: 'ร้านค้าออนไลน์ + ชำระเงิน', d: 'ตะกร้าสินค้า · ชำระเงินออนไลน์ · จัดการคำสั่งซื้อ', price: 25000, max: 1, days: 10, req: ['cms', 'catalog'] },
-
-    { id: 'ga', g: 'การตลาดและ SEO', t: 'ตั้งค่า Google Analytics + Search Console', d: 'ดูจำนวนผู้เข้าชม และส่งเว็บให้ Google เก็บข้อมูล', price: 1000, max: 1, days: 0.5 },
-    { id: 'seo', g: 'การตลาดและ SEO', t: 'SEO ระดับสากล', d: 'sitemap · ข้อมูลสำหรับ Google · รองรับหลายภาษา · redirect URL เดิม', price: 6000, max: 1, days: 2 },
-    { id: 'line', g: 'การตลาดและ SEO', t: 'แจ้งเตือนเข้า LINE', d: 'แจ้งเข้า LINE ทันทีเมื่อมีคนกรอกฟอร์ม', price: 3000, max: 1, days: 1, req: ['form'] },
-    { id: 'article', g: 'การตลาดและ SEO', t: 'เขียนบทความ SEO', d: 'บทความ 800–1,200 คำ พร้อมรูปประกอบ', price: 1500, unit: 'บทความ', max: 50, days: 0 },
-    { id: 'photo', g: 'การตลาดและ SEO', t: 'ตกแต่งรูปสินค้า', d: 'ตัดพื้นหลัง · ปรับแสงและสี', price: 100, unit: 'รูป', max: 500, step: 10, days: 0 },
-
-    { id: 'migrate', g: 'ติดตั้งและดูแล', t: 'ย้ายเนื้อหาจากเว็บเดิม', d: 'สินค้า บทความ และรูปภาพ', price: 4000, max: 1, days: 2, req: ['cms'] },
-    { id: 'deploy', g: 'ติดตั้งและดูแล', t: 'ติดตั้งบนเซิร์ฟเวอร์ของบริษัทลูกค้า', d: 'Linux หรือ Windows Server · HTTPS · คู่มือสำรองข้อมูล (ไม่ต้องเลือกถ้าใช้ Hosting ของเรา)', price: 6000, max: 1, days: 2 },
-    { id: 'training', g: 'ติดตั้งและดูแล', t: 'อบรมการใช้งานหลังบ้าน', d: 'อบรม 1 ครั้ง พร้อมคู่มือภาษาไทย', price: 3000, max: 1, days: 1, req: ['cms'], img: 'img/admin-dashboard.webp' },
-    { id: 'care', g: 'ติดตั้งและดูแล', t: 'ดูแลหลังส่งมอบ 3 เดือน', d: 'แก้ปัญหาการใช้งาน · ปรับแก้เล็กน้อย · อัปเดตความปลอดภัย', price: 10000, max: 1, days: 0 },
-    { id: 'monthly', g: 'ติดตั้งและดูแล', t: 'ดูแลรายเดือน', d: 'ต่อจากช่วงรับประกัน · แก้ไขเนื้อหาเล็กน้อย · สำรองข้อมูล', price: 3500, unit: 'เดือน', max: 12, days: 0, recurring: true },
+    { id: 'page', g: 'web', t: { th: 'เพิ่มหน้าเว็บ', en: 'Extra pages' }, d: { th: 'เช่น เกี่ยวกับเรา · สินค้า/บริการ · ผลงาน · ทีมงาน · ติดต่อเรา', en: 'e.g. About · Products/Services · Portfolio · Team · Contact' }, price: 1000, unit: 'page', max: 30, days: 0.5, img: 'img/th-about.webp' },
+    { id: 'design', g: 'web', t: { th: 'ออกแบบเฉพาะแบรนด์', en: 'Custom brand design' }, d: { th: 'โทนสีและตัวอักษรจากโลโก้ · ภาพเปิดเต็มจอ · ภาพเคลื่อนไหวเบา ๆ', en: 'Colours and type from your logo · full-width hero photo · subtle motion' }, price: 5000, max: 1, days: 4, img: 'img/hero.webp' },
+    { id: 'form', g: 'web', t: { th: 'ฟอร์มติดต่อส่งเข้าอีเมล', en: 'Contact form to email' }, d: { th: 'ลูกค้ากรอกฟอร์ม ข้อความส่งเข้าอีเมลบริษัท', en: 'Visitors fill in a form and the message goes to your company email' }, price: 1000, max: 1, days: 0.5, img: 'img/contact-form.webp' },
+    { id: 'dock', g: 'web', t: { th: 'ปุ่มติดต่อลอย', en: 'Floating contact buttons' }, d: { th: 'LINE · WhatsApp · โทร · อีเมล ติดขอบจอทุกหน้า', en: 'LINE · WhatsApp · call · email, pinned to the screen edge on every page' }, price: 2000, max: 1, days: 1, img: 'img/mobile-th.webp' },
+    { id: 'lang', g: 'lang', t: { th: 'ภาษาเพิ่มเติม', en: 'Extra languages' }, d: { th: 'นอกจากไทย + อังกฤษ เช่น จีน · ญี่ปุ่น · เกาหลี · สเปน · เยอรมัน', en: 'Beyond Thai + English, e.g. Chinese · Japanese · Korean · Spanish · German' }, price: 2000, unit: 'lang', max: 10, days: 1, img: 'img/lang-menu.webp' },
+    { id: 'cms', g: 'sys', t: { th: 'ระบบหลังบ้าน (CMS)', en: 'Content management system (CMS)' }, d: { th: 'แก้ข้อความ รูป และหน้าเว็บได้เองทุกภาษา · ผู้ดูแลหลายคน', en: 'Edit text, images and pages yourself in every language · multiple editors' }, price: 10000, max: 1, days: 6, img: 'img/admin-product.webp' },
+    { id: 'catalog', g: 'sys', t: { th: 'แคตตาล็อกสินค้า', en: 'Product catalogue' }, d: { th: 'หมวดหมู่ · หน้ารายละเอียดสินค้า · สเปก', en: 'Categories · product detail pages · specifications' }, price: 8000, max: 1, days: 4, req: ['cms'], img: 'img/products.webp' },
+    { id: 'quote', g: 'sys', t: { th: 'ฟอร์มขอใบเสนอราคา', en: 'Quote request form' }, d: { th: 'เก็บรายชื่อลูกค้าในหลังบ้าน · ติดตามสถานะ', en: 'Leads are saved in the CMS · track their status' }, price: 5000, max: 1, days: 2, req: ['cms'], img: 'img/contact-form.webp' },
+    { id: 'news', g: 'sys', t: { th: 'ระบบบทความ / ข่าวสาร', en: 'Articles / news' }, d: { th: 'เขียนบทความเองจากหลังบ้าน', en: 'Write and publish articles from the CMS' }, price: 5000, max: 1, days: 2, req: ['cms'], img: 'img/articles.webp' },
+    { id: 'special', g: 'sys', t: { th: 'ฟีเจอร์เฉพาะธุรกิจ', en: 'Business-specific feature' }, d: { th: 'เช่น ปฏิทินฤดูกาลสินค้า ตารางราคา แผนที่สาขา', en: 'e.g. a seasonal calendar, a price table, a branch map' }, price: 6000, unit: 'item', max: 5, days: 2, img: 'img/calendar.webp' },
+    { id: 'member', g: 'sys', t: { th: 'ระบบสมาชิก / ล็อกอินลูกค้า', en: 'Membership / customer login' }, d: { th: 'สมัครสมาชิก · เข้าสู่ระบบ · หน้าข้อมูลสมาชิก', en: 'Sign-up · sign-in · member profile page' }, price: 15000, max: 1, days: 6, req: ['cms'] },
+    { id: 'shop', g: 'sys', t: { th: 'ร้านค้าออนไลน์ + ชำระเงิน', en: 'Online shop + payments' }, d: { th: 'ตะกร้าสินค้า · ชำระเงินออนไลน์ · จัดการคำสั่งซื้อ', en: 'Shopping cart · online payment · order management' }, price: 25000, max: 1, days: 10, req: ['cms', 'catalog'] },
+    { id: 'ga', g: 'mkt', t: { th: 'ตั้งค่า Google Analytics + Search Console', en: 'Google Analytics + Search Console setup' }, d: { th: 'ดูจำนวนผู้เข้าชม และส่งเว็บให้ Google เก็บข้อมูล', en: 'Track visitors and submit the site to Google' }, price: 1000, max: 1, days: 0.5 },
+    { id: 'seo', g: 'mkt', t: { th: 'SEO ระดับสากล', en: 'International SEO' }, d: { th: 'sitemap · ข้อมูลสำหรับ Google · รองรับหลายภาษา · redirect URL เดิม', en: 'Sitemap · structured data for Google · multilingual tags · redirects from old URLs' }, price: 6000, max: 1, days: 2 },
+    { id: 'line', g: 'mkt', t: { th: 'แจ้งเตือนเข้า LINE', en: 'LINE notifications' }, d: { th: 'แจ้งเข้า LINE ทันทีเมื่อมีคนกรอกฟอร์ม', en: 'Get a LINE message the moment someone submits a form' }, price: 3000, max: 1, days: 1, req: ['form'] },
+    { id: 'article', g: 'mkt', t: { th: 'เขียนบทความ SEO', en: 'SEO article writing' }, d: { th: 'บทความ 800–1,200 คำ พร้อมรูปประกอบ', en: '800–1,200-word articles with images' }, price: 1500, unit: 'article', max: 50, days: 0 },
+    { id: 'photo', g: 'mkt', t: { th: 'ตกแต่งรูปสินค้า', en: 'Product photo retouching' }, d: { th: 'ตัดพื้นหลัง · ปรับแสงและสี', en: 'Background removal · light and colour correction' }, price: 100, unit: 'photo', max: 500, step: 10, days: 0 },
+    { id: 'migrate', g: 'ops', t: { th: 'ย้ายเนื้อหาจากเว็บเดิม', en: 'Content migration from your old site' }, d: { th: 'สินค้า บทความ และรูปภาพ', en: 'Products, articles and images' }, price: 4000, max: 1, days: 2, req: ['cms'] },
+    { id: 'deploy', g: 'ops', t: { th: 'ติดตั้งบนเซิร์ฟเวอร์ของบริษัทลูกค้า', en: 'Installation on your company server' }, d: { th: 'Linux หรือ Windows Server · HTTPS · คู่มือสำรองข้อมูล (ไม่ต้องเลือกถ้าใช้ Hosting ของเรา)', en: 'Linux or Windows Server · HTTPS · backup guide (not needed with our hosting)' }, price: 6000, max: 1, days: 2 },
+    { id: 'training', g: 'ops', t: { th: 'อบรมการใช้งานหลังบ้าน', en: 'CMS training' }, d: { th: 'อบรม 1 ครั้ง พร้อมคู่มือภาษาไทย', en: 'One training session with a user guide' }, price: 3000, max: 1, days: 1, req: ['cms'], img: 'img/admin-dashboard.webp' },
+    { id: 'care', g: 'ops', t: { th: 'ดูแลหลังส่งมอบ 3 เดือน', en: '3 months of aftercare' }, d: { th: 'แก้ปัญหาการใช้งาน · ปรับแก้เล็กน้อย · อัปเดตความปลอดภัย', en: 'Support · small changes · security updates' }, price: 10000, max: 1, days: 0 },
+    { id: 'monthly', g: 'ops', t: { th: 'ดูแลรายเดือน', en: 'Monthly care' }, d: { th: 'ต่อจากช่วงรับประกัน · แก้ไขเนื้อหาเล็กน้อย · สำรองข้อมูล', en: 'After the warranty period · small content edits · backups' }, price: 3500, unit: 'month', max: 12, days: 0, recurring: true },
   ];
   const byId = Object.fromEntries(ITEMS.map((i) => [i.id, i]));
 
   // Each level includes everything in the previous one.
   const LEVELS = [
-    { price: 5000, add: ['เว็บ 1 หน้า', 'ไทย + อังกฤษ ฟรี', 'รองรับมือถือ'], set: {} },
-    { price: 10000, add: ['เพิ่มเป็น 5 หน้า', 'ฟอร์มติดต่อส่งอีเมล'], set: { page: 4, form: 1 } },
-    { price: 15000, add: ['ออกแบบเฉพาะแบรนด์'], set: { design: 1 } },
-    { price: 20000, add: ['ภาษาที่ 3', 'ปุ่มติดต่อลอย', 'Google Analytics'], set: { lang: 1, dock: 1, ga: 1 } },
-    { price: 30000, add: ['ระบบหลังบ้าน แก้เนื้อหาเอง'], set: { cms: 1 } },
-    { price: 40000, add: ['แคตตาล็อกสินค้า', 'ภาษาที่ 4'], set: { catalog: 1, lang: 2 } },
-    { price: 50000, add: ['ฟอร์มขอใบเสนอราคา', 'ระบบบทความ'], set: { quote: 1, news: 1 } },
-    { price: 60000, add: ['SEO ระดับสากล', 'ย้ายเนื้อหาเว็บเดิม'], set: { seo: 1, migrate: 1 } },
-    { price: 75000, add: ['ครบ 7 ภาษา', 'ฟีเจอร์เฉพาะธุรกิจ', 'อบรมการใช้งาน'], set: { lang: 5, special: 1, training: 1 } },
-    { price: 100000, add: ['ติดตั้งเซิร์ฟเวอร์ + HTTPS', 'ดูแล 3 เดือน', 'แจ้งเตือน LINE', 'ฟีเจอร์เฉพาะธุรกิจที่ 2'], set: { deploy: 1, care: 1, line: 1, special: 2 } },
+    { price: 5000, add: { th: ['เว็บ 1 หน้า', 'ไทย + อังกฤษ ฟรี', 'รองรับมือถือ'], en: ['One-page website', 'Thai + English free', 'Mobile-friendly'] }, set: {} },
+    { price: 10000, add: { th: ['เพิ่มเป็น 5 หน้า', 'ฟอร์มติดต่อส่งอีเมล'], en: ['Up to 5 pages', 'Contact form to email'] }, set: { page: 4, form: 1 } },
+    { price: 15000, add: { th: ['ออกแบบเฉพาะแบรนด์'], en: ['Custom brand design'] }, set: { design: 1 } },
+    { price: 20000, add: { th: ['ภาษาที่ 3', 'ปุ่มติดต่อลอย', 'Google Analytics'], en: ['A 3rd language', 'Floating contact buttons', 'Google Analytics'] }, set: { lang: 1, dock: 1, ga: 1 } },
+    { price: 30000, add: { th: ['ระบบหลังบ้าน แก้เนื้อหาเอง'], en: ['CMS: edit content yourself'] }, set: { cms: 1 } },
+    { price: 40000, add: { th: ['แคตตาล็อกสินค้า', 'ภาษาที่ 4'], en: ['Product catalogue', 'A 4th language'] }, set: { catalog: 1, lang: 2 } },
+    { price: 50000, add: { th: ['ฟอร์มขอใบเสนอราคา', 'ระบบบทความ'], en: ['Quote request form', 'Articles / news'] }, set: { quote: 1, news: 1 } },
+    { price: 60000, add: { th: ['SEO ระดับสากล', 'ย้ายเนื้อหาเว็บเดิม'], en: ['International SEO', 'Content migration'] }, set: { seo: 1, migrate: 1 } },
+    { price: 75000, add: { th: ['ครบ 7 ภาษา', 'ฟีเจอร์เฉพาะธุรกิจ', 'อบรมการใช้งาน'], en: ['7 languages', 'Business-specific feature', 'CMS training'] }, set: { lang: 5, special: 1, training: 1 } },
+    { price: 100000, add: { th: ['ติดตั้งเซิร์ฟเวอร์ + HTTPS', 'ดูแล 3 เดือน', 'แจ้งเตือน LINE', 'ฟีเจอร์เฉพาะธุรกิจที่ 2'], en: ['Server installation + HTTPS', '3 months of aftercare', 'LINE notifications', 'A 2nd business feature'] }, set: { deploy: 1, care: 1, line: 1, special: 2 } },
   ];
-  // Expand to cumulative quantities
   LEVELS.reduce((acc, l) => (l.qty = { ...acc, ...l.set }), {});
 
   const HOSTS = [
-    { id: 'none', name: 'มีโดเมน + โฮสติ้งเองแล้ว', price: 0, feats: ['ใช้โดเมนและเซิร์ฟเวอร์ที่บริษัทมีอยู่', 'ต้องการให้ติดตั้งให้ เลือก add-on “ติดตั้งบนเซิร์ฟเวอร์ของบริษัทลูกค้า”'] },
-    { id: 'basic', name: 'Basic', price: 3000, feats: ['โดเมน .com 1 ชื่อ', 'โฮสติ้งเว็บทั่วไป', 'SSL (https)', 'ติดตั้งให้ฟรี'], noCms: true },
-    { id: 'standard', name: 'Standard', price: 4000, feats: ['โดเมน .com 1 ชื่อ', 'เซิร์ฟเวอร์รองรับระบบหลังบ้าน + ฐานข้อมูล', 'SSL (https)', 'สำรองข้อมูลทุกสัปดาห์', 'ติดตั้งให้ฟรี'] },
-    { id: 'premium', name: 'Premium', price: 5000, feats: ['ทุกอย่างใน Standard', 'สำรองข้อมูลทุกวัน', 'แจ้งเตือนเมื่อเว็บล่ม', 'เซิร์ฟเวอร์แรงขึ้น รองรับผู้เข้าชมมากขึ้น'] },
+    { id: 'none', name: { th: 'มีโดเมน + โฮสติ้งเองแล้ว', en: 'I have my own domain + hosting' }, price: 0, feats: { th: ['ใช้โดเมนและเซิร์ฟเวอร์ที่บริษัทมีอยู่', 'ต้องการให้ติดตั้งให้ เลือก add-on “ติดตั้งบนเซิร์ฟเวอร์ของบริษัทลูกค้า”'], en: ['Use the domain and server your company already has', 'Need it installed? Add “Installation on your company server”'] } },
+    { id: 'basic', name: { th: 'Basic', en: 'Basic' }, price: 3000, feats: { th: ['โดเมน .com 1 ชื่อ', 'โฮสติ้งเว็บทั่วไป', 'SSL (https)', 'ติดตั้งให้ฟรี'], en: ['One .com domain', 'Standard web hosting', 'SSL (https)', 'Free installation'] }, noCms: true },
+    { id: 'standard', name: { th: 'Standard', en: 'Standard' }, price: 4000, feats: { th: ['โดเมน .com 1 ชื่อ', 'เซิร์ฟเวอร์รองรับระบบหลังบ้าน + ฐานข้อมูล', 'SSL (https)', 'สำรองข้อมูลทุกสัปดาห์', 'ติดตั้งให้ฟรี'], en: ['One .com domain', 'Server for a CMS + database', 'SSL (https)', 'Weekly backups', 'Free installation'] } },
+    { id: 'premium', name: { th: 'Premium', en: 'Premium' }, price: 5000, feats: { th: ['ทุกอย่างใน Standard', 'สำรองข้อมูลทุกวัน', 'แจ้งเตือนเมื่อเว็บล่ม', 'เซิร์ฟเวอร์แรงขึ้น รองรับผู้เข้าชมมากขึ้น'], en: ['Everything in Standard', 'Daily backups', 'Downtime alerts', 'A faster server for more visitors'] } },
   ];
 
   /* ─────────── State ─────────── */
   const qty = Object.fromEntries(ITEMS.map((i) => [i.id, 0]));
   let host = 'basic';
-  let hostAuto = '';
+  let hostAuto = false;
+  let lang = 'th';
 
-  const fmt = (n) => Math.round(n).toLocaleString('th-TH');
+  const tr = (o) => (o && typeof o === 'object' && !Array.isArray(o) ? o[lang] ?? o.th : o);
+  const ui = () => UI[lang];
+  const unit = (i, n) => { const u = U[i.unit]; if (!u) return ''; return lang === 'en' ? u.en[n === 1 ? 0 : 1] : u.th; };
+  const fmt = (n) => Math.round(n).toLocaleString(lang === 'en' ? 'en-US' : 'th-TH');
   const $ = (id) => document.getElementById(id);
 
   function setQty(id, n) {
@@ -332,45 +420,57 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
     if (n === 0) ITEMS.filter((d) => (d.req || []).includes(id) && qty[d.id] > 0).forEach((d) => setQty(d.id, 0));
   }
 
-  /* ─────────── Render (static parts) ─────────── */
+  /* ─────────── Render (language-dependent parts) ─────────── */
   const weeksFor = (q) => Math.max(1, Math.ceil((BASE.days + ITEMS.reduce((s, i) => s + i.days * (q[i.id] || 0), 0)) / 5));
-  $('levels').innerHTML = LEVELS.map((l, idx) => `
-    <button class="lvl" type="button" data-level="${idx}" aria-pressed="false">
-      <span class="name">ขั้นที่ ${idx + 1}</span>
-      <span class="p num">${fmt(l.price)} <small>บาท</small></span>
-      <ul>${l.add.map((a) => `<li>${a}</li>`).join('')}</ul>
-      <span class="w">ประมาณ ${weeksFor(l.qty)} สัปดาห์</span>
-    </button>`).join('');
-
-  const groupNames = [...new Set(ITEMS.map((i) => i.g))];
   const thumb = (src) => src ? `<img class="thumb" src="${src}" alt="" loading="lazy">` : '<span class="ph" aria-hidden="true">+</span>';
-  $('groups').innerHTML =
-    `<div class="group"><h3>รวมในราคาเริ่มต้น</h3><div class="items">
-      <div class="item base">${thumb(BASE.img)}
-        <div><div class="t">${BASE.t}</div><div class="d">${BASE.d}</div><div class="price"><b class="num">${fmt(BASE.price)}</b> บาท</div></div>
-        <span class="free">รวมแล้ว</span></div></div></div>` +
-    groupNames.map((g) => `<div class="group"><h3>${g}</h3><div class="items">${ITEMS.filter((i) => i.g === g).map((i) => `
-      <div class="item" id="row-${i.id}">
-        ${thumb(i.img)}
-        <div>
-          <div class="t">${i.t}</div>
-          <div class="d">${i.d}</div>
-          ${i.req ? `<div class="req">ต้องมี: ${i.req.map((r) => byId[r].t).join(', ')}</div>` : ''}
-          <div class="price"><b class="num">${fmt(i.price)}</b> บาท${i.unit ? ` / ${i.unit}` : ''}</div>
-        </div>
-        <div class="ctl">${i.max === 1
-          ? `<button class="toggle" type="button" role="switch" aria-checked="false" data-toggle="${i.id}" aria-label="${i.t}"></button>`
-          : `<div class="stepper"><button type="button" data-dec="${i.id}" aria-label="ลด ${i.t}">−</button><input id="q-${i.id}" data-qty="${i.id}" type="number" inputmode="numeric" min="0" max="${i.max}" step="${i.step || 1}" value="0" aria-label="จำนวน${i.unit || ''} ${i.t}"><button type="button" data-inc="${i.id}" aria-label="เพิ่ม ${i.t}">+</button></div>`}
-        </div>
-      </div>`).join('')}</div></div>`).join('');
 
-  $('hosts').innerHTML = HOSTS.map((h) => `
-    <button class="host" type="button" role="radio" aria-checked="false" data-host="${h.id}">
-      <span class="nm">${h.name}</span>
-      <span class="p num">${h.price ? fmt(h.price) : '0'} <small>${h.price ? 'บาท / ปี' : 'บาท'}</small></span>
-      <ul>${h.feats.map((f) => `<li>${f}</li>`).join('')}</ul>
-      ${h.noCms ? '<span class="why" hidden id="why-basic">ใช้ไม่ได้กับระบบหลังบ้าน</span>' : ''}
-    </button>`).join('');
+  function renderStatic() {
+    const t = ui();
+    document.documentElement.lang = lang;
+    document.title = lang === 'en' ? 'Website Package Builder' : 'เลือกแพ็กเกจเว็บไซต์';
+    document.querySelectorAll('[data-i]').forEach((el) => {
+      const v = t[el.dataset.i];
+      if (typeof v !== 'string') return;
+      if (el.hasAttribute('data-html')) el.innerHTML = v; else el.textContent = v;
+    });
+    document.querySelectorAll('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+
+    $('levels').innerHTML = LEVELS.map((l, idx) => `
+      <button class="lvl" type="button" data-level="${idx}" aria-pressed="false">
+        <span class="name">${t.level(idx + 1)}</span>
+        <span class="p num">${fmt(l.price)} <small>${t.baht}</small></span>
+        <ul>${tr(l.add).map((a) => `<li>${a}</li>`).join('')}</ul>
+        <span class="w">${t.about(weeksFor(l.qty))}</span>
+      </button>`).join('');
+
+    $('groups').innerHTML =
+      `<div class="group"><h3>${t.included}</h3><div class="items">
+        <div class="item base">${thumb(BASE.img)}
+          <div><div class="t">${tr(BASE.t)}</div><div class="d">${tr(BASE.d)}</div><div class="price"><b class="num">${fmt(BASE.price)}</b> ${t.baht}</div></div>
+          <span class="free">${t.inc}</span></div></div></div>` +
+      Object.keys(G).map((g) => `<div class="group"><h3>${tr(G[g])}</h3><div class="items">${ITEMS.filter((i) => i.g === g).map((i) => `
+        <div class="item" id="row-${i.id}">
+          ${thumb(i.img)}
+          <div>
+            <div class="t">${tr(i.t)}</div>
+            <div class="d">${tr(i.d)}</div>
+            ${i.req ? `<div class="req">${t.needs}${i.req.map((r) => tr(byId[r].t)).join(', ')}</div>` : ''}
+            <div class="price"><b class="num">${fmt(i.price)}</b> ${t.baht}${i.unit ? ` / ${unit(i, 1)}` : ''}</div>
+          </div>
+          <div class="ctl">${i.max === 1
+            ? `<button class="toggle" type="button" role="switch" aria-checked="false" data-toggle="${i.id}" aria-label="${tr(i.t)}"></button>`
+            : `<div class="stepper"><button type="button" data-dec="${i.id}" aria-label="− ${tr(i.t)}">−</button><input id="q-${i.id}" data-qty="${i.id}" type="number" inputmode="numeric" min="0" max="${i.max}" step="${i.step || 1}" value="0" aria-label="${tr(i.t)}"><button type="button" data-inc="${i.id}" aria-label="+ ${tr(i.t)}">+</button></div>`}
+          </div>
+        </div>`).join('')}</div></div>`).join('');
+
+    $('hosts').innerHTML = HOSTS.map((h) => `
+      <button class="host" type="button" role="radio" aria-checked="false" data-host="${h.id}">
+        <span class="nm">${tr(h.name)}</span>
+        <span class="p num">${fmt(h.price)} <small>${h.price ? t.perYear : t.baht}</small></span>
+        <ul>${tr(h.feats).map((f) => `<li>${f}</li>`).join('')}</ul>
+        ${h.noCms ? `<span class="why" hidden id="why-basic">${t.notCms}</span>` : ''}
+      </button>`).join('');
+  }
 
   /* ─────────── Update ─────────── */
   function calc() {
@@ -383,15 +483,16 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
     const below = [...LEVELS].reverse().find((l) => ITEMS.every((i) => (l.qty[i.id] || 0) <= qty[i.id]));
     return { chosen, dev, care, h, days, weeks: Math.max(1, Math.ceil(days / 5)), level, below, grand: dev + care + h.price };
   }
+  const line = (i) => `${tr(i.t)}${i.max > 1 ? ` × ${qty[i.id]} ${unit(i, qty[i.id])}` : ''}`;
 
   function update() {
-    // Hosting rule: a CMS needs a server with a database
+    const t = ui();
     const basicBtn = document.querySelector('[data-host="basic"]');
     basicBtn.disabled = qty.cms > 0;
     $('why-basic').hidden = !(qty.cms > 0);
-    if (qty.cms > 0 && host === 'basic') { host = 'standard'; hostAuto = 'เปลี่ยน Hosting เป็น Standard ให้อัตโนมัติ เพราะระบบหลังบ้านต้องใช้เซิร์ฟเวอร์ที่รองรับฐานข้อมูล'; }
+    if (qty.cms > 0 && host === 'basic') { host = 'standard'; hostAuto = true; }
     $('host-note').hidden = !hostAuto;
-    $('host-note').textContent = hostAuto;
+    $('host-note').textContent = hostAuto ? t.autoStd : '';
 
     const c = calc();
     ITEMS.forEach((i) => {
@@ -406,46 +507,57 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
     document.querySelectorAll('[data-level]').forEach((b) => b.setAttribute('aria-pressed', String(LEVELS[b.dataset.level] === c.level)));
     document.querySelectorAll('[data-host]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.host === host)));
 
-    $('lines').innerHTML = [`<li><span>${BASE.t} · ไทย + อังกฤษ</span><span class="num">${fmt(BASE.price)}</span></li>`,
-      ...c.chosen.map((i) => `<li><span>${i.t}${i.max > 1 ? ` × ${qty[i.id]} ${i.unit}` : ''}</span><span class="num">${fmt(i.price * qty[i.id])}</span></li>`),
-      ...(c.h.price ? [`<li><span>Hosting ${c.h.name} (ต่อปี)</span><span class="num">${fmt(c.h.price)}</span></li>`] : []),
+    const hn = tr(c.h.name);
+    $('lines').innerHTML = [`<li><span>${t.baseLine(tr(BASE.t))}</span><span class="num">${fmt(BASE.price)}</span></li>`,
+      ...c.chosen.map((i) => `<li><span>${line(i)}</span><span class="num">${fmt(i.price * qty[i.id])}</span></li>`),
+      ...(c.h.price ? [`<li><span>${t.hostLine(hn)}</span><span class="num">${fmt(c.h.price)}</span></li>`] : []),
     ].join('');
     $('t-dev').textContent = fmt(c.dev);
     $('t-host').textContent = fmt(c.h.price);
-    $('t-host-l').textContent = c.h.price ? `Hosting ${c.h.name} + Domain + SSL (ต่อปี)` : 'Hosting + Domain (ลูกค้ามีเอง)';
+    $('t-host-l').textContent = c.h.price ? t.hostL(hn) : t.hostOwn;
     $('own-host').hidden = c.h.price > 0;
     $('t-care').textContent = fmt(c.care);
-    $('t-care-l').textContent = qty.monthly ? `ดูแลรายเดือน ${qty.monthly} เดือน` : 'ดูแลรายเดือน';
+    $('t-care-l').textContent = t.careL(qty.monthly);
     $('t-care-l').hidden = $('t-care').hidden = !qty.monthly;
     $('t-grand').textContent = fmt(c.grand);
-    $('t-renew').textContent = c.h.price ? `${fmt(c.h.price)} / ปี` : '—';
-    $('grand').textContent = `${fmt(c.grand)} บาท`;
-    $('bar-total').textContent = `${fmt(c.grand)} บาท`;
-    $('match').textContent = c.level ? `ตรงกับขั้น ${fmt(c.level.price)} บาท${c.h.price ? ' + Hosting' : ''}`
-      : c.below ? `ขั้น ${fmt(c.below.price)} บาท + add-on ที่เลือกเพิ่ม` : 'ปรับเอง';
-    $('weeks').textContent = `${c.weeks} สัปดาห์`;
-    const p1 = Math.round(c.dev * 0.4), p2 = Math.round(c.dev * 0.3);
-    $('p1').textContent = fmt(p1); $('p2').textContent = fmt(p2); $('p3').textContent = fmt(c.dev - p1 - p2);
+    $('t-renew').textContent = c.h.price ? t.renew(fmt(c.h.price)) : '—';
+    $('grand').textContent = `${fmt(c.grand)} ${t.baht}`;
+    $('bar-total').textContent = `${fmt(c.grand)} ${t.baht}`;
+    $('match').textContent = c.level ? t.match(fmt(c.level.price), c.h.price) : c.below ? t.below(fmt(c.below.price)) : t.custom;
+    $('weeks').textContent = t.weeks(c.weeks);
+    const half = Math.round(c.dev * 0.5);
+    $('p1L').textContent = t.p1L(c.h.price > 0); $('p1').textContent = fmt(half + c.h.price);
+    $('p2L').textContent = t.p2L; $('p2').textContent = fmt(c.dev - half);
+    $('p3L').textContent = t.p3L; $('p3').textContent = t.perMonth(fmt(byId.monthly.price));
+    $('p3L').hidden = $('p3').hidden = !qty.monthly;
 
-    // Shareable link: #page=4&cms=1&h=standard
-    const parts = ITEMS.filter((i) => qty[i.id] > 0).map((i) => `${i.id}=${qty[i.id]}`);
-    parts.push(`h=${host}`);
-    try { history.replaceState(null, '', parts.length ? '#' + parts.join('&') : location.pathname + location.search); } catch {}
+    // Shareable link: #ui=en&page=4&cms=1&h=standard (ui = page language, lang = extra languages)
+    const parts = [`ui=${lang}`, ...ITEMS.filter((i) => qty[i.id] > 0).map((i) => `${i.id}=${qty[i.id]}`), `h=${host}`];
+    try { history.replaceState(null, '', '#' + parts.join('&')); } catch {}
   }
 
   function applyLevel(idx) {
     ITEMS.forEach((i) => (qty[i.id] = 0));
     Object.entries(LEVELS[idx].qty).forEach(([id, n]) => (qty[id] = n));
-    hostAuto = '';
+    hostAuto = false;
+    update();
+  }
+
+  function setLang(l) {
+    lang = l === 'en' ? 'en' : 'th';
+    try { localStorage.setItem('pricing-lang', lang); } catch {}
+    renderStatic();
     update();
   }
 
   /* ─────────── Events ─────────── */
   document.addEventListener('click', (e) => {
+    const lb = e.target.closest('[data-lang]');
+    if (lb) return setLang(lb.dataset.lang);
     const t = e.target.closest('[data-level],[data-toggle],[data-inc],[data-dec],[data-host]');
     if (!t) return;
     if (t.dataset.level) return applyLevel(+t.dataset.level);
-    if (t.dataset.host) { host = t.dataset.host; hostAuto = ''; return update(); }
+    if (t.dataset.host) { host = t.dataset.host; hostAuto = false; return update(); }
     const id = t.dataset.toggle || t.dataset.inc || t.dataset.dec;
     const it = byId[id];
     if (t.dataset.toggle) setQty(id, qty[id] ? 0 : 1);
@@ -461,47 +573,60 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
   });
 
   function summaryText() {
+    const t = ui();
     const c = calc();
+    const hn = tr(c.h.name);
     return [
-      'สรุปรายการเว็บไซต์ที่เลือก',
-      c.level ? `ขั้นราคา ${fmt(c.level.price)} บาท` : '',
+      t.sumTitle,
+      c.level ? t.sumLevel(fmt(c.level.price)) : '',
       '',
-      `- ${BASE.t} (ไทย + อังกฤษ): ${fmt(BASE.price)} บาท`,
-      ...c.chosen.map((i) => `- ${i.t}${i.max > 1 ? ` × ${qty[i.id]} ${i.unit}` : ''}: ${fmt(i.price * qty[i.id])} บาท`),
+      `- ${tr(BASE.t)} ${t.sumBase}: ${fmt(BASE.price)} ${t.baht}`,
+      ...c.chosen.map((i) => `- ${line(i)}: ${fmt(i.price * qty[i.id])} ${t.baht}`),
       '',
-      `ค่าพัฒนาเว็บไซต์: ${fmt(c.dev)} บาท`,
-      c.h.price ? `Hosting ${c.h.name} + Domain + SSL: ${fmt(c.h.price)} บาท/ปี` : 'Hosting + Domain: ลูกค้ามีเอง (ต้องมีก่อนเปิดใช้งานเว็บ)',
-      c.care ? `ดูแลรายเดือน ${qty.monthly} เดือน: ${fmt(c.care)} บาท` : '',
-      `รวมปีแรก: ${fmt(c.grand)} บาท`,
-      `ระยะเวลาประมาณ ${c.weeks} สัปดาห์`,
+      t.sumDev(fmt(c.dev)),
+      c.h.price ? t.sumHost(hn, fmt(c.h.price)) : t.sumOwn,
+      c.care ? t.sumCare(qty.monthly, fmt(c.care)) : '',
+      t.sumGrand(fmt(c.grand)),
+      t.sumWeeks(c.weeks),
+      t.sumP1(fmt(Math.round(c.dev * 0.5) + c.h.price), c.h.price > 0),
+      t.sumP2(fmt(c.dev - Math.round(c.dev * 0.5))),
       '',
-      `ดูรายการเดียวกัน: ${location.href}`,
+      t.sumLink + location.href,
     ].filter((l, i, a) => l !== '' || a[i - 1] !== '').join('\n');
   }
   async function copy(text, okMsg) {
     try { await navigator.clipboard.writeText(text); $('toast').textContent = okMsg; }
-    catch { $('toast').textContent = 'คัดลอกอัตโนมัติไม่ได้ กรุณาเลือกข้อความแล้วกด Ctrl+C'; prompt?.('คัดลอกข้อความนี้', text); }
+    catch { $('toast').textContent = ui().copyFail; prompt?.('', text); }
   }
-  $('copy').addEventListener('click', () => copy(summaryText(), 'คัดลอกสรุปแล้ว วางใน LINE หรืออีเมลได้เลย'));
-  $('share').addEventListener('click', () => copy(location.href, 'คัดลอกลิงก์แล้ว คนที่เปิดลิงก์จะเห็นรายการเดียวกัน'));
+  $('copy').addEventListener('click', () => copy(summaryText(), ui().copyOk));
+  $('share').addEventListener('click', () => copy(location.href, ui().linkOk));
   $('print').addEventListener('click', () => window.print());
-  $('reset').addEventListener('click', () => { applyLevel(0); host = 'basic'; update(); $('toast').textContent = ''; });
+  $('reset').addEventListener('click', () => { host = 'basic'; applyLevel(0); $('toast').textContent = ''; });
   $('to-summary').addEventListener('click', () => $('summary').scrollIntoView({ behavior: 'smooth' }));
   const openPreview = () => {
-    if (!window.WebPreview) { $('toast').textContent = 'โหลดตัวอย่างไม่สำเร็จ กรุณารีเฟรชหน้า'; return; }
+    if (!window.WebPreview) { $('toast').textContent = ui().previewFail; return; }
+    const t = ui();
     const c = calc();
-    const labels = [`เว็บ ${1 + qty.page} หน้า`, `${2 + qty.lang} ภาษา`, ...c.chosen.filter((i) => !['page', 'lang'].includes(i.id)).map((i) => i.t + (i.max > 1 ? ` × ${qty[i.id]}` : '')), c.h.price ? `Hosting ${c.h.name}` : 'โดเมน/โฮสติ้งของลูกค้า'];
-    window.WebPreview.open({ qty: { ...qty }, hostName: c.h.price ? c.h.name : '', labels });
+    const labels = [t.chipPages(1 + qty.page), t.chipLangs(2 + qty.lang),
+      ...c.chosen.filter((i) => !['page', 'lang'].includes(i.id)).map((i) => tr(i.t) + (i.max > 1 ? ` × ${qty[i.id]}` : '')),
+      c.h.price ? `Hosting ${tr(c.h.name)}` : t.chipOwn];
+    window.WebPreview.open({ qty: { ...qty }, hostName: c.h.price ? tr(c.h.name) : '', labels, lang });
   };
   $('preview').addEventListener('click', openPreview);
   $('preview-m').addEventListener('click', openPreview);
 
-  /* ─────────── Load state from link ─────────── */
+  /* ─────────── Start: language + selection from the link ─────────── */
   const params = new URLSearchParams(location.hash.slice(1));
-  if ([...params.keys()].length) {
+  let saved = null;
+  try { saved = localStorage.getItem('pricing-lang'); } catch {}
+  lang = params.get('ui') || saved || ((navigator.language || '').toLowerCase().startsWith('th') ? 'th' : 'en');
+  if (lang !== 'en') lang = 'th';
+  renderStatic();
+  const keys = [...params.keys()].filter((k) => k !== 'ui');
+  if (keys.length) {
     params.forEach((v, k) => {
       if (k === 'h' && HOSTS.some((h) => h.id === v)) host = v;
-      else if (byId[k]) setQty(k, parseInt(v, 10));
+      else if (k !== 'ui' && byId[k]) setQty(k, parseInt(v, 10));
     });
     update();
   } else {
