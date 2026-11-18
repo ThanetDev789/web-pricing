@@ -181,7 +181,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
     <div>
       <div class="eyebrow">เลือกแพ็กเกจเว็บไซต์</div>
       <h1>เลือกเฉพาะสิ่งที่ต้องใช้ แล้วดูราคาจริงทันที</h1>
-      <p>เลือกขั้นราคาเป็นจุดเริ่ม เพิ่มหรือลด add-on ได้ทุกรายการ แล้วเลือก Hosting ราคาและสิ่งที่เลือกจะสรุปให้ด้านขวา คัดลอก บันทึก PDF หรือส่งลิงก์ให้คนอื่นเปิดดูชุดเดียวกันได้</p>
+      <p>เลือกขั้นราคาเป็นจุดเริ่ม เพิ่มหรือลด add-on ได้ทุกรายการ แล้วเลือก Hosting ราคาและสิ่งที่เลือกจะสรุปให้ด้านขวา กด “ดูตัวอย่างเว็บไซต์” เพื่อลองใช้เว็บจริงตามที่เลือก คัดลอก บันทึก PDF หรือส่งลิงก์ให้คนอื่นเปิดดูชุดเดียวกันได้</p>
       <p class="must"><b>เว็บไซต์ต้องมีโดเมนและโฮสติ้งจึงจะเปิดใช้งานได้</b> เลือกแพ็กเกจ Hosting + Domain + SSL ของเราในขั้นที่ 3 (เริ่ม 3,000 บาท/ปี) หรือใช้ของที่บริษัทมีอยู่แล้วก็ได้</p>
     </div>
     <div class="from">
@@ -236,7 +236,8 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
         </dl>
         <p class="must" id="own-host" hidden>ลูกค้าต้องมีโดเมนและโฮสติ้งของตัวเองก่อนเปิดใช้งานเว็บ</p>
         <div class="actions">
-          <button class="btn primary" type="button" id="copy">คัดลอกสรุป</button>
+          <button class="btn primary" type="button" id="preview">ดูตัวอย่างเว็บไซต์</button>
+          <button class="btn" type="button" id="copy" style="grid-column: 1 / -1">คัดลอกสรุป</button>
           <button class="btn" type="button" id="share">คัดลอกลิงก์</button>
           <button class="btn" type="button" id="print">บันทึก PDF</button>
           <button class="btn" type="button" id="reset" style="grid-column: 1 / -1">เริ่มใหม่</button>
@@ -251,9 +252,10 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
 
 <div class="bar">
   <div><div class="k">ค่าใช้จ่ายปีแรก</div><div class="v num" id="bar-total">8,000 บาท</div></div>
-  <button class="btn" type="button" id="to-summary">ดูสรุป</button>
+  <div style="display:flex;gap:8px"><button class="btn" type="button" id="preview-m">ดูตัวอย่าง</button><button class="btn" type="button" id="to-summary" style="background:var(--surface);color:var(--ink);border-color:var(--line)">ดูสรุป</button></div>
 </div>
 
+<script src="preview.js"></script>
 <script>
 (() => {
   /* ─────────── Price list ─────────── */
@@ -484,6 +486,14 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
   $('print').addEventListener('click', () => window.print());
   $('reset').addEventListener('click', () => { applyLevel(0); host = 'basic'; update(); $('toast').textContent = ''; });
   $('to-summary').addEventListener('click', () => $('summary').scrollIntoView({ behavior: 'smooth' }));
+  const openPreview = () => {
+    if (!window.WebPreview) { $('toast').textContent = 'โหลดตัวอย่างไม่สำเร็จ กรุณารีเฟรชหน้า'; return; }
+    const c = calc();
+    const labels = [`เว็บ ${1 + qty.page} หน้า`, `${2 + qty.lang} ภาษา`, ...c.chosen.filter((i) => !['page', 'lang'].includes(i.id)).map((i) => i.t + (i.max > 1 ? ` × ${qty[i.id]}` : '')), c.h.price ? `Hosting ${c.h.name}` : 'โดเมน/โฮสติ้งของลูกค้า'];
+    window.WebPreview.open({ qty: { ...qty }, hostName: c.h.price ? c.h.name : '', labels });
+  };
+  $('preview').addEventListener('click', openPreview);
+  $('preview-m').addEventListener('click', openPreview);
 
   /* ─────────── Load state from link ─────────── */
   const params = new URLSearchParams(location.hash.slice(1));
