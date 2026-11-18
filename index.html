@@ -110,6 +110,8 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
 .host .p small { font-size: 12px; color: var(--mute); font-weight: 500; }
 .host ul { margin: 0; padding-left: 16px; font-size: 12.5px; color: var(--ink-2); }
 .host .why { font-size: 12px; color: var(--warn); }
+.must { margin: 10px 0 0; font-size: 13.5px; padding: 10px 12px; border-radius: 8px; background: var(--gold-soft); color: var(--ink); border-left: 3px solid var(--gold); }
+.step .must { margin: 0 0 12px; }
 .notice { margin-top: 10px; font-size: 13px; padding: 8px 12px; border-radius: 8px; background: var(--gold-soft); color: var(--gold); }
 
 /* Summary */
@@ -180,6 +182,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
       <div class="eyebrow">เลือกแพ็กเกจเว็บไซต์</div>
       <h1>เลือกเฉพาะสิ่งที่ต้องใช้ แล้วดูราคาจริงทันที</h1>
       <p>เลือกขั้นราคาเป็นจุดเริ่ม เพิ่มหรือลด add-on ได้ทุกรายการ แล้วเลือก Hosting ราคาและสิ่งที่เลือกจะสรุปให้ด้านขวา คัดลอก บันทึก PDF หรือส่งลิงก์ให้คนอื่นเปิดดูชุดเดียวกันได้</p>
+      <p class="must"><b>เว็บไซต์ต้องมีโดเมนและโฮสติ้งจึงจะเปิดใช้งานได้</b> เลือกแพ็กเกจ Hosting + Domain + SSL ของเราในขั้นที่ 3 (เริ่ม 3,000 บาท/ปี) หรือใช้ของที่บริษัทมีอยู่แล้วก็ได้</p>
     </div>
     <div class="from">
       <div class="k">เว็บไซต์เริ่มต้น</div>
@@ -202,6 +205,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
 
       <section class="step" aria-labelledby="s3">
         <div class="step-h"><span class="n">3</span><h2 id="s3">Hosting + Domain + SSL</h2><span class="hint">ราคาต่อปี · ติดตั้งเว็บให้ฟรีเมื่อใช้ Hosting ของเรา</span></div>
+        <p class="must">ทุกเว็บไซต์ต้องมี <b>โดเมน</b> (ชื่อเว็บ เช่น yourcompany.com) และ <b>โฮสติ้ง</b> (เซิร์ฟเวอร์ที่เก็บเว็บ) ต่ออายุทุกปี ถ้ายังไม่มี เลือกแพ็กเกจด้านล่างได้เลย ราคารวมโดเมน โฮสติ้ง SSL และติดตั้งให้ฟรี</p>
         <div class="hosts" id="hosts" role="radiogroup" aria-label="Hosting"></div>
         <div class="notice" id="host-note" hidden></div>
       </section>
@@ -211,7 +215,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
       <div class="sum-top">
         <div id="print-head"><b>สรุปรายการเว็บไซต์ที่เลือก</b></div>
         <div class="k">ค่าใช้จ่ายปีแรก</div>
-        <div class="v num" id="grand">5,000 บาท</div>
+        <div class="v num" id="grand">8,000 บาท</div>
         <div class="s" id="match">ตรงกับขั้น 5,000 บาท</div>
       </div>
       <div class="sum-body">
@@ -230,6 +234,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
           <dt>งวด 2 · อนุมัติดีไซน์ 30%</dt><dd class="num" id="p2">1,500</dd>
           <dt>งวด 3 · ส่งมอบ 30%</dt><dd class="num" id="p3">1,500</dd>
         </dl>
+        <p class="must" id="own-host" hidden>ลูกค้าต้องมีโดเมนและโฮสติ้งของตัวเองก่อนเปิดใช้งานเว็บ</p>
         <div class="actions">
           <button class="btn primary" type="button" id="copy">คัดลอกสรุป</button>
           <button class="btn" type="button" id="share">คัดลอกลิงก์</button>
@@ -245,7 +250,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
 </div>
 
 <div class="bar">
-  <div><div class="k">ค่าใช้จ่ายปีแรก</div><div class="v num" id="bar-total">5,000 บาท</div></div>
+  <div><div class="k">ค่าใช้จ่ายปีแรก</div><div class="v num" id="bar-total">8,000 บาท</div></div>
   <button class="btn" type="button" id="to-summary">ดูสรุป</button>
 </div>
 
@@ -302,15 +307,15 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
   LEVELS.reduce((acc, l) => (l.qty = { ...acc, ...l.set }), {});
 
   const HOSTS = [
-    { id: 'none', name: 'ไม่ต้องการ', price: 0, feats: ['ลูกค้ามีโดเมนและเซิร์ฟเวอร์เอง'] },
+    { id: 'none', name: 'มีโดเมน + โฮสติ้งเองแล้ว', price: 0, feats: ['ใช้โดเมนและเซิร์ฟเวอร์ที่บริษัทมีอยู่', 'ต้องการให้ติดตั้งให้ เลือก add-on “ติดตั้งบนเซิร์ฟเวอร์ของบริษัทลูกค้า”'] },
     { id: 'basic', name: 'Basic', price: 3000, feats: ['โดเมน .com 1 ชื่อ', 'โฮสติ้งเว็บทั่วไป', 'SSL (https)', 'ติดตั้งให้ฟรี'], noCms: true },
     { id: 'standard', name: 'Standard', price: 4000, feats: ['โดเมน .com 1 ชื่อ', 'เซิร์ฟเวอร์รองรับระบบหลังบ้าน + ฐานข้อมูล', 'SSL (https)', 'สำรองข้อมูลทุกสัปดาห์', 'ติดตั้งให้ฟรี'] },
-    { id: 'premium', name: 'Premium', price: 5000, feats: ['ทุกอย่างใน Standard', 'สำรองข้อมูลทุกวัน', 'แจ้งเตือนเมื่อเว็บล่ม', 'โดเมน .co.th หรือโดเมนที่ 2'] },
+    { id: 'premium', name: 'Premium', price: 5000, feats: ['ทุกอย่างใน Standard', 'สำรองข้อมูลทุกวัน', 'แจ้งเตือนเมื่อเว็บล่ม', 'เซิร์ฟเวอร์แรงขึ้น รองรับผู้เข้าชมมากขึ้น'] },
   ];
 
   /* ─────────── State ─────────── */
   const qty = Object.fromEntries(ITEMS.map((i) => [i.id, 0]));
-  let host = 'none';
+  let host = 'basic';
   let hostAuto = '';
 
   const fmt = (n) => Math.round(n).toLocaleString('th-TH');
@@ -404,7 +409,8 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
     ].join('');
     $('t-dev').textContent = fmt(c.dev);
     $('t-host').textContent = fmt(c.h.price);
-    $('t-host-l').textContent = c.h.price ? `Hosting ${c.h.name} + Domain + SSL (ต่อปี)` : 'Hosting + Domain + SSL';
+    $('t-host-l').textContent = c.h.price ? `Hosting ${c.h.name} + Domain + SSL (ต่อปี)` : 'Hosting + Domain (ลูกค้ามีเอง)';
+    $('own-host').hidden = c.h.price > 0;
     $('t-care').textContent = fmt(c.care);
     $('t-care-l').textContent = qty.monthly ? `ดูแลรายเดือน ${qty.monthly} เดือน` : 'ดูแลรายเดือน';
     $('t-care-l').hidden = $('t-care').hidden = !qty.monthly;
@@ -420,7 +426,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
 
     // Shareable link: #page=4&cms=1&h=standard
     const parts = ITEMS.filter((i) => qty[i.id] > 0).map((i) => `${i.id}=${qty[i.id]}`);
-    if (host !== 'none') parts.push(`h=${host}`);
+    parts.push(`h=${host}`);
     try { history.replaceState(null, '', parts.length ? '#' + parts.join('&') : location.pathname + location.search); } catch {}
   }
 
@@ -461,7 +467,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
       ...c.chosen.map((i) => `- ${i.t}${i.max > 1 ? ` × ${qty[i.id]} ${i.unit}` : ''}: ${fmt(i.price * qty[i.id])} บาท`),
       '',
       `ค่าพัฒนาเว็บไซต์: ${fmt(c.dev)} บาท`,
-      c.h.price ? `Hosting ${c.h.name} + Domain + SSL: ${fmt(c.h.price)} บาท/ปี` : 'Hosting + Domain: ลูกค้าจัดการเอง',
+      c.h.price ? `Hosting ${c.h.name} + Domain + SSL: ${fmt(c.h.price)} บาท/ปี` : 'Hosting + Domain: ลูกค้ามีเอง (ต้องมีก่อนเปิดใช้งานเว็บ)',
       c.care ? `ดูแลรายเดือน ${qty.monthly} เดือน: ${fmt(c.care)} บาท` : '',
       `รวมปีแรก: ${fmt(c.grand)} บาท`,
       `ระยะเวลาประมาณ ${c.weeks} สัปดาห์`,
@@ -476,7 +482,7 @@ header.top p { margin: 8px 0 0; color: var(--ink-2); max-width: 66ch; }
   $('copy').addEventListener('click', () => copy(summaryText(), 'คัดลอกสรุปแล้ว วางใน LINE หรืออีเมลได้เลย'));
   $('share').addEventListener('click', () => copy(location.href, 'คัดลอกลิงก์แล้ว คนที่เปิดลิงก์จะเห็นรายการเดียวกัน'));
   $('print').addEventListener('click', () => window.print());
-  $('reset').addEventListener('click', () => { applyLevel(0); host = 'none'; update(); $('toast').textContent = ''; });
+  $('reset').addEventListener('click', () => { applyLevel(0); host = 'basic'; update(); $('toast').textContent = ''; });
   $('to-summary').addEventListener('click', () => $('summary').scrollIntoView({ behavior: 'smooth' }));
 
   /* ─────────── Load state from link ─────────── */
